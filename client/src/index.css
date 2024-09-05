@@ -1,0 +1,254 @@
+
+body {
+  font-family: Montserrat;
+  margin: 0;
+  padding: 0;
+  background-color: #f9f9f9  ;
+}
+
+/* Navbar container */
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.625rem 1.25rem;
+  background-color: #2c2c2c   ;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+  border-bottom: 0.1rem solid #e25d1f;
+}
+
+.nav-container a {
+  color: azure;
+  text-decoration: none;
+  padding: 0.7rem;
+}
+
+.navbar-brand .Logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 2rem; 
+}
+
+/* Form container styling */
+.formContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.formContainer .input-group {
+  display: flex;
+  align-items: center;
+}
+
+.formContainer .form-control {
+  width: 30rem;
+  height: 2.5rem;
+  padding: 0.5rem;
+  border:  0.1rem solid rgb(240, 119, 5);
+  border-right: none;
+  border-radius: 0.25rem 0 0 0.25rem;
+  outline: none;
+  margin: 0;
+}
+
+.formContainer .form-control:focus {
+  outline: none;  
+  box-shadow: inset 0 0 5px #e25d1f;
+}
+
+
+.formContainer .btn {
+  padding: 0.5rem 1rem;
+  height: 2.5rem;
+  border: none;
+  background-color:  #e25d1f;
+  color: azure;
+  border-radius: 0 0.25rem 0.25rem 0;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  border:  0.1rem solid rgb(240, 119, 5);
+  margin: 0;
+}
+
+.formContainer .btn:hover {
+  background-color: #a5360a;
+}
+
+/* Dropdown menu */
+.dropdown {
+  position: relative;
+}
+
+.dropdown-toggle {
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  border: none;
+  color: azure;
+  cursor: pointer;
+}
+
+.dropdown span {
+    color: azure;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: white;
+  min-width: 11rem;
+  box-shadow: 0 0.5rem rem rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  border-radius: 0.25rem;
+}
+
+.dropdown-menu a {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  color: #333;
+  white-space: nowrap;
+}
+
+.dropdown-menu a:hover {
+  background-color: #f1f1f1;
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+/* Avatar styling */
+.avatar-nav {
+  display: flex;
+  align-items: center;
+  padding: 0;
+  margin: 0.1rem;
+  gap: 1rem;
+}
+
+.avatar-nav img {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+}
+
+/* Cart and User styles */
+#cart {
+  margin-right: 0.3rem;
+}
+
+
+.Count {
+  background-color: #e25d1f;
+  padding : 0.1rem 0.5rem;
+  border-radius: 10%;
+  margin: 0;
+}
+
+/* Login button */
+#login_btn {
+  background-color: #e25d1f;
+  color: azure;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+#login_btn:hover {
+  background-color:#a5360a ;
+}
+
+
+
+/* ------------------------------Home */
+
+.main-container{
+  display: grid;
+  margin-top: 5rem;
+  margin-left: 10%;
+  margin-right: 10%;
+  border-radius: 0.5rem;
+  border: 0.25px solid orangered;
+}
+
+.card-container {
+  width: 16rem;
+  height: 22rem;
+  background-color:white;
+  margin: 3rem 0  1rem  1rem;
+  border: 0.25px solid orangered;
+  border-radius: 0.25rem;
+  transition: transform 0.3s ease;
+}
+
+.card-container:hover{
+  transform: translateX(2px) translateY(-2px);
+}
+
+.card-container img {
+  width: 100%;
+  height: 60%;
+  margin-top: 0.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.card-container h5{
+  /* border-top: solid 0.1rem orangered; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0.25rem;
+}
+
+.ratings {
+  display:flex;
+  align-items: center;
+  justify-content: center;
+
+}
+.reviews{
+ color: #333;
+ margin-left: 0.5rem;
+}
+
+.star-ratings {
+  color: orange;
+}
+
+.price {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.25rem;
+}
+.btn_Details {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #e25d1f;
+  margin-left: 15%;
+  margin-right: 15%;
+  border-radius: 0.3rem; 
+  text-decoration: none;
+  color: inherit;
+}
+
+.btn_Details:hover {
+  background-color: rgb(238, 122, 69);
+}
