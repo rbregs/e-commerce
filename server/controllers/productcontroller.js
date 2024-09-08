@@ -6,12 +6,13 @@ import catchAssyncErrors from '../middlewares/catchAssyncErrors.js';
 
 
 //get all products
-export const getProducts = catchAssyncErrors (async (req, res) => {
+export const getProducts = catchAssyncErrors (async (req, res, next) => {
 
         let resPerPage = 4
         const apiFilters = new APIFilters(Product,req.query).search().filters() //serch
         let products =await apiFilters.query
         let filteredProductsCount = products.length
+
 
         apiFilters.pagination(resPerPage)
         products = await apiFilters.query.clone()

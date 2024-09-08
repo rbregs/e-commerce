@@ -1,31 +1,19 @@
 import React from "react";
 import "../../index.css";
+import { Link } from "react-router-dom";
+import Search from "./Search";
 
 export default function Header() {
   return (
     <>
       <nav className="nav-container">
         <div className="navbar-brand">
-          <a href="" className="Logo">
+          <Link to="/" className="Logo">
             Logo
-          </a>
+          </Link>
         </div>
         <div className="formContainer">
-          <form action="" method="get">
-            <div className="input-group">
-              <input
-                type="text"
-                id="search_field"
-                aria-describedby="search_btn"
-                className="form-control"
-                placeholder="Enter Product Name ..."
-                name="keyword"
-              />
-              <button id="search_btn" className="btn" type="submit">
-                <i className="fa fa-search" aria-hidden="true"></i>
-              </button>
-            </div>
-          </form>
+          <Search />
         </div>
         <div className="nav-right">
           <a href="/cart">

@@ -4,8 +4,8 @@ import { validateObjectId } from '../middlewares/iderrors.js';
 import  { isAuthenticatedUser,authorizeRoles }  from '../middlewares/authentication.js'
 
 const router = express.Router();
-
-router.route('/products').get(isAuthenticatedUser, getProducts);
+// isAuthenticatedUser,
+router.route('/products').get( getProducts);
 router.route('/products/:id').get(validateObjectId,getProductbyId)
 
 router.route('/admin/products/:id').delete(validateObjectId,isAuthenticatedUser,authorizeRoles('admin'),deleteProduct)
