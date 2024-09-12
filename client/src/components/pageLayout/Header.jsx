@@ -1,9 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "../../index.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Search from "./Search";
+import { useGetMeQuery } from "../../redux/api/userApi";
+import { useSelector } from "react-redux";
+import { useLazyLogoutQuery } from "../../redux/api/autApi";
 
 export default function Header() {
+  const { user, isAuthenticated } = useSelector((state) => state.auth);
+  const { isLoading } = useGetMeQuery();
+  const navigate = useNavigate();
+  const [logout, { isSuccess }] = useLazyLogoutQuery();
+
+
+  useEffect(() => {
+    if (isSuccess) navigate(0); 
+  }, [isSuccess, navigate]);
+
+  const logoutHandler = () => {
+    logout();
+  };
+
   return (
     <>
       <nav className="nav-container">
@@ -24,35 +41,38 @@ export default function Header() {
               0
             </span>
           </a>
-          <div className="dropdown">
-            <button className="dropdown-toggle" type="button">
-              <figure className="avatar-nav">
-                <img
-                  src="../images/avatar.png"
-                  className="rounded-circle"
-                  alt="User Avatar"
-                />
-              </figure>
-              <span>User</span>
-            </button>
-            <div className="dropdown-menu">
-              <a className="dropdown-item" href="/admin/dashboard">
-                Dashboard
-              </a>
-              <a className="dropdown-item" href="/me/orders">
-                Orders
-              </a>
-              <a className="dropdown-item" href="/me/profile">
-                Profile
-              </a>
-              <a className="dropdown-item text-danger" href="/">
-                Logout
-              </a>
+          {user ? (
+            <div className="dropdown">
+              <button className="dropdown-toggle" type="button">
+                <figure className="avatar-nav">
+                  <img
+                    src={user?.avatar ? user?.avatar.url : "../public/images/avatar.png"}
+                  />
+                </figure>
+                <span> {user?.name}</span>
+              </button>
+              <div className="dropdown-menu">
+                <Link className="dropdown-item" to="/admin/dashboard">
+                  Dashboard
+                </Link>
+                <Link className="dropdown-item" to="/me/orders">
+                  Orders
+                </Link>
+                <Link className="dropdown-item" to="/me/profile">
+                  Profile
+                </Link>
+                <Link className="dropdown-item text-danger" to="/" onClick={logoutHandler}>
+                  Logout
+                </Link>
+              </div>
             </div>
-          </div>
-          <a href="/login" className="btnLogin" id="login_btn">
-            Login
-          </a>
+          ) : (
+            !isLoading && (
+              <Link to="/login" className="btnLogin" id="login_btn">
+                Login
+              </Link>
+            )
+          )}
         </div>
       </nav>
     </>

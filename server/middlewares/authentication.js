@@ -6,9 +6,9 @@ import catchAssyncErrors from "./catchAssyncErrors.js"
 import User from '../models/usermodel.js'
 
 
-export const isAuthenticatedUser = catchAssyncErrors(async (req,res,next) => {
+export const isAuthenticatedUser = catchAssyncErrors(async (req, res, next) => {
 
-    const {token} = req.cookies
+    const { token } = req.cookies
     console.log(token)
 
     if (!token) {
@@ -16,18 +16,18 @@ export const isAuthenticatedUser = catchAssyncErrors(async (req,res,next) => {
     }
 
     //verify
-   const decoded =  jwt.verify(token,process.env.JWT_SECRET)
+    const decoded = jwt.verify(token, process.env.JWT_SECRET)
     const user = req.user = await User.findById(decoded.id)
 
-   console.log(user)
+    console.log(user)
 
     next()
-        
+
 })
 
 export const authorizeRoles = (...roles) => {
-    return (req,res,next) =>  {
-        if(!roles.includes(req.user.role)) {
+    return (req, res, next) => {
+        if (!roles.includes(req.user.role)) {
             return next(new ErrorHandler(`Role ${req.user.role} is not allowed to access this resource`, 403))
         }
         next()

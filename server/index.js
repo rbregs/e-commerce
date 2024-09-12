@@ -21,7 +21,7 @@ dotenv.config({path:'./config/config.env'})
 const app = express()
 const port = process.env.PORT 
 
-app.use(express.json())
+app.use(express.json({limit:"10mb"}))
 app.use(cookieParser())
 
 //connecting database

@@ -1,6 +1,7 @@
 import catchAssyncErrors from '../middlewares/catchAssyncErrors.js'
 import User from '../models/usermodel.js'
 import sendToken from '../routes/sendToken.js'
+import { delteFile, uploadFile } from '../utils/cloudinary.js'
 import { getResetPasswordTemplate } from '../utils/emailTemplate.js'
 import ErrorHandler from '../utils/errorHandler.js'
 import sendEmail from '../utils/sendEmail.js'
@@ -43,7 +44,7 @@ export const loginUser = catchAssyncErrors(async (req, res, next) => {
     sendToken(user, 201, res)
 });
 
-
+//logout 
 export const logout = catchAssyncErrors(async (req, res, next) => {
     
     res.cookie("token",null, {
@@ -56,85 +57,93 @@ export const logout = catchAssyncErrors(async (req, res, next) => {
     })
 });
 
-//forgot password
-export const forgotPassword = catchAssyncErrors(async (req, res, next) => {
+//upload avatar
+export const upload = catchAssyncErrors(async (req, res, next) => {
 
-    // find user in database
-    const user = await User.findOne({ email:req.body.email})
-    console.log(user.email)
+    //remove previous avatar
 
-    if (!user) {
-        return next(new ErrorHandler('user not found with this email', 404))
+    if(req?.user?.avatar.url) {
+        await delteFile(req?.user?.avatar?.public_id)
     }
-
-    // get reset pass
-    const resetToken = user.getResetPassword()
-    console.log(user.name)
-
-    await user.save()
-    //create user pass
-
-    const resetUrl = `${process.env.FRONTEND_URL}/api/v1/password/reset/${resetToken} `
     
-    const message = getResetPasswordTemplate(user?.name,resetUrl)
+   const avatarResponse = await uploadFile(req.body.avatar,"kproducts/avatars")
 
-    try {
-        await sendEmail({
-            email: user.email,
-            subject: 'KProducts Password Recovery',
-            message,
-        })
-
-        res.status(200).json({
-            message:`Email sent to: ${user.email}`,
-        })
-    } catch (error) {
-        user.resetPasswordToken = undefined
-        user.resetPasswordExpire = undefined
-        await user.save()
-        return next(new ErrorHandler(error?.message, 500))
-    }
-
+   const user = await User.findByIdAndUpdate(req?.user?._id, {
+    avatar: avatarResponse
+   })
+   
+    res.status(200).json({
+     user,
+    })
 });
 
-//reset
+
+// forgotPassword function
+export const forgotPassword = catchAssyncErrors(async (req, res, next) => {
+    const { email } = req.body;
+    if (!email) {
+        return next(new ErrorHandler('Email is required', 400));
+    }
+
+    const user = await User.findOne({ email });
+    if (!user) {
+        return next(new ErrorHandler('Email not found', 404));
+    }
+
+    console.log('Before generating reset token');
+
+    const resetToken = user.getResetPassword();
+    await user.save();
+
+    const resetUrl = `${process.env.FRONTEND_URL}/password/reset/${resetToken}`;
+    const message = getResetPasswordTemplate(user.name, resetUrl);
+
+    await sendEmail({
+        email: user.email,
+        subject: 'KProducts Password Recovery',
+        message,
+    });
+
+    res.status(200).json({
+        message: `Email sent to: ${user.email}`,
+    });
+});
+
+
+// resetPassword function
 export const resetPassword = catchAssyncErrors(async (req, res, next) => {
-    // Hash the token from the URL to compare with the hashed token 
     const resetPasswordToken = crypto
       .createHash("sha256")
       .update(req.params.token)
       .digest('hex');
- 
-    // Find user by resetPasswordToken and check if the resetPasswordExpire is in the future
+
+    console.log(`this is reset token in resetPassword beforehashing ${resetPasswordToken}`)
+
     const user = await User.findOne({
       resetPasswordToken,
       resetPasswordExpire: { $gt: Date.now() }
-    })
-    
+    });
 
-    // Check if user was found
+
+
     if (!user) {
       return next(new ErrorHandler('Password reset token is invalid or has expired', 404));
     }
- 
-    // Check if passwords match
+
     if (req.body.password !== req.body.confirmPassword) {
       return next(new ErrorHandler('Passwords do not match', 400));
     }
- 
-    // Set new password and clear reset token fields
+
     user.password = req.body.password;
     user.resetPasswordToken = undefined;
     user.resetPasswordExpire = undefined;
- 
+
     await user.save();
-    // Save user with new password
-   
- 
-    // Send token and response
+
     sendToken(user, 200, res);
- });
- 
+});
+
+
 
 //get user profile  api/v1/me
 export const getUserProfile = catchAssyncErrors(async (req,res,next) => {

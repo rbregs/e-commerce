@@ -7,12 +7,16 @@ import StarRatings from "react-star-ratings";
 
 export default function ProductDetails() {
   const params = useParams();
+
+  const [quantity,setQuantity] = useState(1)
+  const [activeImg, setActiveImg] = useState("");
+
   const { data, isLoading, error, isError } = useGetProductDetailsQuery(
     params?.id
   );
   const product = data?.product;
 
-  const [activeImg, setActiveImg] = useState("");
+ 
 
   // ----set default image
   useEffect(() => {
@@ -30,8 +34,47 @@ export default function ProductDetails() {
     }
   }, [isError]);
 
-  //load loader
   if (isLoading) return <Loader />;
+
+  const handleAddItem = () => {
+    const count = document.querySelector(".count")
+    if (count.valueAsNumber >= product?.stock) return
+    const qty = count.valueAsNumber + 1
+    setQuantity(qty)
+  };
+
+  // const handleAddItem = () => {
+  //   const count = document.querySelector(".count");
+  //   if (count.valueAsNumber >= product?.stock) return;
+  //   const qty = count.valueAsNumber + 1;
+  //   setQuantity(qty);
+  // };
+  
+  
+  // const handleSubtractItem = () => {
+  //   setQuantity((prevQuantity) => {
+  //     const newQuantity = prevQuantity - 1;
+  //     return newQuantity < 1 ? 1 : newQuantity; 
+  //   });
+  // };
+
+  const handleSubtractItem = () => {
+    const count = document.querySelector(".count")
+    if (count.valueAsNumber <= 1) return
+    const qty = count.valueAsNumber - 1
+    setQuantity(qty)
+  };
+
+  const setItemToCart = () => {
+    const cartItem = {
+      product:product?._id,
+      name:product?.name,
+      price:product?.price,
+      image:product?.image[0]?.url,
+      stock:product?.stock,
+      quantity
+    }
+  }
   return (
     <>
       <div className="productDetails-container">
@@ -80,16 +123,20 @@ export default function ProductDetails() {
             <hr />
             <h4>$ {product?.price}</h4>
             <div className="quatitySection">
-              <span className="subtract">-</span>
-              <input type="number" id="specific-input" value="1" disabled />
-              <span className="addition">+</span>
+              <span className="subtract" onClick={handleSubtractItem}> - </span>
+              <input type="number"
+               id="specific-input" 
+               className="count"
+               value={quantity}
+               disabled />
+              <span className="addition" onClick={handleAddItem}>+</span>
               <button className="btnCart">Add to Cart</button>
             </div>
             <hr />
             <div className="stockStatus">
               <p>Status: </p>
               <span className={product?.stock > 0 ? "stock" : "outOfStock"}>
-                {product?.stock > 0 ? "In Stock" : "Out of Stock"}{" "}
+                {product?.stock > 0 ? `In Stock ( ${product?.stock} )` : "Out of Stock"}{" "}
               </span>
             </div>
             <hr />

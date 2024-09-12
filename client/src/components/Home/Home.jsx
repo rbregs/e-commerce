@@ -13,16 +13,19 @@ export default function Home() {
 
   const page = searchParams.get("page") || 1;
   const keyword = searchParams.get("keyword") || "";
-  //price search
-  const min = searchParams.get("min");
+  const min = searchParams.get("min"); //price search
   const max = searchParams.get("max");
+  const category = searchParams.get("category");  //category search 
+  const ratings = searchParams.get("ratings");  //category search 
 
   const params = { page, keyword };
 
-  //price search
-  min !== null && (params.min = min);
+  min !== null && (params.min = min);  //price search
   max !== null && (params.max = max);
+  category !== null && (params.category = category);  // category
+  ratings !== null && (params.ratings = ratings);  // ratings
 
+  
   const { data, isLoading, error, isError } = useGetProductsQuery(params)
 
   useEffect(() => {
@@ -45,7 +48,7 @@ export default function Home() {
               {/* </div> */}
             </div>
           )}
-          <div className="row">
+          <div className="product-result">
             <h1>
               {keyword
                 ? `${data?.products?.length} Product found with keyword ${keyword}`
