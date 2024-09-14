@@ -4,12 +4,17 @@ import { useParams } from "react-router-dom";
 import { Loader } from "../pageLayout/Loader";
 import toast from "react-hot-toast";
 import StarRatings from "react-star-ratings";
+import { useDispatch } from "react-redux";
+import { setCartItems } from "../../redux/features/cartSlice";
+import MetaData from "../pageLayout/MetaData";
 
 export default function ProductDetails() {
   const params = useParams();
 
   const [quantity,setQuantity] = useState(1)
   const [activeImg, setActiveImg] = useState("");
+
+  const dispatch = useDispatch()
 
   const { data, isLoading, error, isError } = useGetProductDetailsQuery(
     params?.id
@@ -36,12 +41,6 @@ export default function ProductDetails() {
 
   if (isLoading) return <Loader />;
 
-  const handleAddItem = () => {
-    const count = document.querySelector(".count")
-    if (count.valueAsNumber >= product?.stock) return
-    const qty = count.valueAsNumber + 1
-    setQuantity(qty)
-  };
 
   // const handleAddItem = () => {
   //   const count = document.querySelector(".count");
@@ -58,6 +57,13 @@ export default function ProductDetails() {
   //   });
   // };
 
+  const handleAddItem = () => {
+    const count = document.querySelector(".count")
+    if (count.valueAsNumber >= product?.stock) return
+    const qty = count.valueAsNumber + 1
+    setQuantity(qty)
+  };
+
   const handleSubtractItem = () => {
     const count = document.querySelector(".count")
     if (count.valueAsNumber <= 1) return
@@ -66,17 +72,21 @@ export default function ProductDetails() {
   };
 
   const setItemToCart = () => {
+    console.log('click')
     const cartItem = {
       product:product?._id,
       name:product?.name,
       price:product?.price,
-      image:product?.image[0]?.url,
+      image:product?.images[0]?.url,
       stock:product?.stock,
       quantity
     }
+    dispatch(setCartItems(cartItem))
+    toast.success("Item added to cart")
   }
   return (
     <>
+    <MetaData title={"Product Info"} />
       <div className="productDetails-container">
         <div className="product-container">
           <div className="productImages">
@@ -122,7 +132,7 @@ export default function ProductDetails() {
             </div>
             <hr />
             <h4>$ {product?.price}</h4>
-            <div className="quatitySection">
+            <div className="quantitySection">
               <span className="subtract" onClick={handleSubtractItem}> - </span>
               <input type="number"
                id="specific-input" 
@@ -130,7 +140,11 @@ export default function ProductDetails() {
                value={quantity}
                disabled />
               <span className="addition" onClick={handleAddItem}>+</span>
-              <button className="btnCart">Add to Cart</button>
+              <button 
+              className={product.stock === 0 ? "btnCartfaded": "btnCart"}
+              disabled={product.stock === 0}
+              onClick={setItemToCart}
+              > Add to Cart</button>
             </div>
             <hr />
             <div className="stockStatus">

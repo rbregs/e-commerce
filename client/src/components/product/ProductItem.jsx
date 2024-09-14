@@ -13,7 +13,6 @@ export default function ProductItem({ product }) {
           <div className="card-body">
             <h6>
               <Link to={`/product/${product?._id}`}>{product?.name}</Link>
-              
             </h6>
 
             <div className="ratings">

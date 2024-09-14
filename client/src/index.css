@@ -431,14 +431,14 @@ footer {
   margin-left: 0.5rem;
 }
 
-.quatitySection {
+.quantitySection {
   display: flex;
   justify-content: flex-start;
   align-items: center;
   gap: 1rem;
 }
 
-.quatitySection .subtract {
+.quantitySection .subtract {
   background-color: rgb(212, 146, 58);
   border-radius: 10%;
   color: white;
@@ -447,11 +447,11 @@ footer {
   cursor: pointer;
   transition: 0.3s ease-in;
 }
-.quatitySection .subtract:hover {
+.quantitySection .subtract:hover {
   background-color: rgb(212, 146, 58);
   background-color: red;
 }
-.quatitySection .addition {
+.quantitySection .addition {
   background-color: rgba(9, 97, 21, 0.753);
   border-radius: 10%;
   color: white;
@@ -460,7 +460,7 @@ footer {
   cursor: pointer;
   transition: 0.3s ease-in;
 }
-.quatitySection .addition:hover {
+.quantitySection .addition:hover {
   background-color: blue;
 }
 
@@ -481,7 +481,7 @@ footer {
   border-radius: 0.25rem;
 }
 
-.quatitySection .btnCart {
+.quantitySection .btnCart {
   border: none;
   padding: 0.25rem 0.35rem 0.25rem 0.35rem;
   background-color: rgb(207, 155, 111);
@@ -491,8 +491,19 @@ footer {
   transition: 0.3s ease-in-out;
 }
 
-.quatitySection .btnCart:hover {
-  background-color: blue;
+
+.quantitySection .btnCartfaded {
+  border: none;
+  padding: 0.25rem 0.35rem 0.25rem 0.35rem;
+  background-color: rgb(160, 151, 144);
+  margin-left: 2rem;
+  border-radius: 0.3rem;
+  color: white;
+  transition: 0.3s ease-in-out;
+}
+
+.quantitySection .btnCart:hover {
+  background-color: rgb(224, 184, 132);
 }
 
 .stockStatus {
@@ -1035,3 +1046,49 @@ hr {
 .updatePassword-btn:hover {
   background-color: #c5c6ee;
 }
+/* ----------------------------cart------------- */
+.cartContainer {
+  display: flex;
+  justify-content: space-between;
+  /* border: 1px solid green; */
+}
+
+.cartProductContainer {
+  width: 100%;
+  margin-right: 4rem;
+}
+
+.cartImage{
+ width: 25%;
+}
+.cartQuantity {
+   width: 25%;
+  margin-top: 1.5rem;
+}
+
+.stockCounter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+}
+
+.inputField {
+  text-align: center;
+  padding: 0.5rem; 
+  margin: 0 1rem; 
+  width: 3rem;
+  border: none;
+}
+
+.cartDelete {
+  color: red;
+  border: none;
+  background-color: white;
+  border-radius: 0.1rem;
+}
+
+.cartDelete:hover {
+  background-color: rgb(219, 208, 208);
+}
+

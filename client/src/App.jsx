@@ -14,6 +14,8 @@ import UploadAvatar from "./components/user/UploadAvatar.jsx";
 import UpdatePassword from "./components/user/UpdatePassword.jsx";
 import ForgetPassword from "./components/user/ForgetPassword.jsx";
 import ResetPassword from "./components/auth/ResetPassword.jsx";
+import Cart from "./components/cart/Cart.jsx";
+import Shipping from "./components/cart/Shipping.jsx";
 
 function App() {
   
@@ -35,6 +37,8 @@ function App() {
               <Route path="/me/update_password" element={<ProtectedRoute><UpdatePassword/></ProtectedRoute>} />
               <Route path="/password/forgot" element={<ForgetPassword />} />
               <Route path="/password/reset/:token" element={<ResetPassword />} />
+              <Route path="/cart" element={<ProtectedRoute><Cart/></ProtectedRoute>} />
+              <Route path="/shipping" element={<ProtectedRoute><Shipping/></ProtectedRoute>} />
             </Routes>
           </div>
 

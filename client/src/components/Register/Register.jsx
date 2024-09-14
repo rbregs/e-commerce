@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useRegisterMutation } from "../../redux/api/autApi";
 import toast from "react-hot-toast";
+import MetaData from "../pageLayout/MetaData";
 
 export default function Register() {
   const [user, setUser] = useState({
@@ -11,20 +12,20 @@ export default function Register() {
   });
 
   const { name, email, password } = user;
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const [register, { isLoading, error, data }] = useRegisterMutation();
-  const {isAuthenticated} = useSelector((state) => state.auth)
+  const { isAuthenticated } = useSelector((state) => state.auth);
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate('/');
+      navigate("/");
     }
 
     if (error) {
       toast.error(error?.data.message);
     }
-  }, [error,isAuthenticated]);
+  }, [error, isAuthenticated]);
 
   const submitDetails = (e) => {
     e.preventDefault();
@@ -44,42 +45,44 @@ export default function Register() {
 
   return (
     <>
-      <form method="post" className="loginForm" onSubmit={submitDetails}>
-        <h5>Register</h5>
-        <div className="loginFields">
-          <div className="Name">
+      <MetaData title={"Register"}> 
+        <form method="post" className="loginForm" onSubmit={submitDetails}>
+          <h5>Register</h5>
+          <div className="loginFields">
+            <div className="Name">
+              <input
+                type="text"
+                name="name"
+                placeholder="Full Name"
+                value={name}
+                onChange={onChange}
+              />
+            </div>
+            <div className="userInput">
+              <input
+                type="text"
+                name="email"
+                placeholder="Email"
+                value={email}
+                onChange={onChange}
+              />
+            </div>
             <input
-              type="text"
-              name="name"
-              placeholder="Full Name"
-              value={name}
+              type="password"
+              placeholder="Password"
+              name="password"
+              value={password}
               onChange={onChange}
             />
+            <button type="submit" disabled={isLoading}>
+              {isLoading ? "Creating account" : "Register"}
+            </button>
+            <p className="registerLink">
+              Already have an account? <Link to="/login">Login</Link>
+            </p>
           </div>
-          <div className="userInput">
-            <input
-              type="text"
-              name="email"
-              placeholder="Email"
-              value={email}
-              onChange={onChange}
-            />
-          </div>
-          <input
-            type="password"
-            placeholder="Password"
-            name="password"
-            value={password}
-            onChange={onChange}
-          />
-          <button type="submit" disabled={isLoading}>
-            {isLoading ? "Creating account" : "Register"}
-          </button>
-          <p className="registerLink">
-            Already have an account? <Link to="/login">Login</Link>
-          </p>
-        </div>
-      </form>
+        </form>
+      </MetaData>
     </>
   );
 }

@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ForgetPassword from "../user/ForgetPassword";
+import MetaData from "../pageLayout/MetaData";
 
 export default function Login() {
   //inputField
@@ -37,8 +38,8 @@ export default function Login() {
   //getting credentials
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const {isAuthenticated} = useSelector((state) => state.auth)
-  const navigate = useNavigate()
+  const { isAuthenticated } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
 
   const userNameChange = (e) => {
     setEmail(e.target.value);
@@ -52,16 +53,13 @@ export default function Login() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate('/');
+      navigate("/");
     }
 
     if (error) {
       toast.error(error?.data.message);
     }
-  }, [error,isAuthenticated]);
-
-
-
+  }, [error, isAuthenticated]);
 
   const submitDetails = (e) => {
     e.preventDefault();
@@ -72,42 +70,42 @@ export default function Login() {
     login(loginData);
   };
 
-
   return (
     <>
-      <form method="post" className="loginForm" onSubmit={submitDetails}>
-        <h5>Login</h5>
-        <div className="loginFields">
-          <div className="userInput">
-            <input
-              type="text"
-              className="username"
-              placeholder="Email"
-              value={email}
-              onChange={userNameChange}
-            />
-          </div>
-          <div className="passwordWrapper">
-            <input
-              type="password"
-              className="username"
-              placeholder="Password"
-              ref={passwordInputRef}
-              value={password}
-              onChange={passwordChange}
-            />
-            <p className="forgetPass" ref={forgetPassRef}>
-              <Link to="/password/forgot">Forgot Password?</Link>
+      <MetaData title={"Login"} />
+        <form method="post" className="loginForm" onSubmit={submitDetails}>
+          <h5>Login</h5>
+          <div className="loginFields">
+            <div className="userInput">
+              <input
+                type="text"
+                className="username"
+                placeholder="Email"
+                value={email}
+                onChange={userNameChange}
+              />
+            </div>
+            <div className="passwordWrapper">
+              <input
+                type="password"
+                className="username"
+                placeholder="Password"
+                ref={passwordInputRef}
+                value={password}
+                onChange={passwordChange}
+              />
+              <p className="forgetPass" ref={forgetPassRef}>
+                <Link to="/password/forgot">Forgot Password?</Link>
+              </p>
+            </div>
+            <button type="submit" disabled={isLoading}>
+              {isLoading ? "Authenticating.. please wait" : "Login"}
+            </button>
+            <p className="registerLink">
+              Don't have an account? <Link to="/register">Register</Link>
             </p>
           </div>
-          <button type="submit" disabled={isLoading}>
-            {isLoading ? "Authenticating.. please wait" : "Login"}
-          </button>
-          <p className="registerLink">
-            Don't have an account? <Link to="/register">Register</Link>
-          </p>
-        </div>
-      </form>
+        </form>
     </>
   );
 }

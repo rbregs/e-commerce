@@ -4,15 +4,16 @@ import { useUpdateProfileMutation } from "../../redux/api/userApi";
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import UserLayout from "../pageLayout/UserLayout";
+import MetaData from "../pageLayout/MetaData";
 
 export default function UpdateProfile() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
 
-
   const navigate = useNavigate();
 
-  const [updateProfile, { isLoading, error, isSuccess }] = useUpdateProfileMutation();
+  const [updateProfile, { isLoading, error, isSuccess }] =
+    useUpdateProfileMutation();
 
   const { user } = useSelector((state) => state.auth);
 
@@ -42,47 +43,46 @@ export default function UpdateProfile() {
   };
 
   return (
-    <UserLayout>
-      <div className="updatePassword-wrapper">
-        <div className="updatePassword-container">
-          <div className="updatePassword-title">
-            <form action="#" method="post" onSubmit={handleSubmit}>
-              <h2>Update Profile</h2>
-              <div className="">
-                <label htmlFor="old_password_field" >
-                  Old Password
-                </label>
-                <input
-                type="text"
-                id="name_field"
-                className="form-control"
-                name="name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-              </div>
+    <>
+      <MetaData title={"Update Profile"} />
+      <UserLayout>
+        <div className="updatePassword-wrapper">
+          <div className="updatePassword-container">
+            <div className="updatePassword-title">
+              <form action="#" method="post" onSubmit={handleSubmit}>
+                <h2>Update Profile</h2>
+                <div className="">
+                  <label htmlFor="old_password_field">Old Password</label>
+                  <input
+                    type="text"
+                    id="name_field"
+                    className="form-control"
+                    name="name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                </div>
 
-              <div className="mb-3">
-                <label  htmlFor="new_password_field" >
-                  New Password
-                </label>
-                <input
-                type="email"
-                id="email_field"
-                className="form-control"
-                name="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              </div>
+                <div className="mb-3">
+                  <label htmlFor="new_password_field">New Password</label>
+                  <input
+                    type="email"
+                    id="email_field"
+                    className="form-control"
+                    name="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </div>
 
-              <button type="submit" className="updatePassword-btn">
-                Update Password
-              </button>
-            </form>
+                <button type="submit" className="updatePassword-btn">
+                  Update Password
+                </button>
+              </form>
+            </div>
           </div>
         </div>
-      </div>
-    </UserLayout>
+      </UserLayout>
+    </>
   );
 }

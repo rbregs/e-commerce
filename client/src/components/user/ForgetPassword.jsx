@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useForgotPasswordMutation } from "../../redux/api/userApi";
+import MetaData from "../pageLayout/MetaData";
 
 export default function ForgetPassword() {
   const[email,setEmail] = useState('')
@@ -40,6 +41,7 @@ export default function ForgetPassword() {
 
   return (
     <>
+    <MetaData title ="Forgot Password" />
       <form method="post" className="loginForm" onSubmit={submitDetails} >
         <h5>Forgot Password</h5>
         <div className="loginFields">

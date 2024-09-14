@@ -3,21 +3,18 @@ import UserLayout from "../pageLayout/UserLayout";
 import { useNavigate } from "react-router-dom";
 import { useUpdatePasswordMutation } from "../../redux/api/userApi";
 import toast from "react-hot-toast";
-
+import MetaData from "../pageLayout/MetaData";
 
 export default function UpdatePassword() {
+  const [oldPassword, setOldPassword] = useState("");
+  const [password, setPassword] = useState("");
 
-  const [oldPassword,setOldPassword] =useState("")
-  const [password,setPassword] =useState("")
-
-  
   const navigate = useNavigate();
 
-  const [updatePassword, { isLoading, error, isSuccess }] = useUpdatePasswordMutation();
-
+  const [updatePassword, { isLoading, error, isSuccess }] =
+    useUpdatePasswordMutation();
 
   useEffect(() => {
-   
     if (error) {
       toast.error(error?.data?.message || "Incorrect Password");
     }
@@ -26,7 +23,7 @@ export default function UpdatePassword() {
       toast.success("Password Updated");
       navigate("/me/profile");
     }
-  }, [ error, isSuccess]);
+  }, [error, isSuccess]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -38,45 +35,49 @@ export default function UpdatePassword() {
     updatePassword(userData);
   };
 
-
   return (
-    <UserLayout>
-      <div className="updatePassword-wrapper">
-        <div className="updatePassword-container">
-          <div className="updatePassword-title">
-            <form  onSubmit={handleSubmit}>
-              <h2>Update Password</h2>
-              <div className="">
-                <label htmlFor="old_password_field">Current Password</label>
-                <input
-                  type="password"
-                  id="old_password_field"
-                  className="form-control"
-                  onChange={(e) => setOldPassword(e.target.value)}
-                  value={oldPassword}
-                 
-                />
-              </div>
+    <>
+      <MetaData title={"Update Password"} />
+      <UserLayout>
+        <div className="updatePassword-wrapper">
+          <div className="updatePassword-container">
+            <div className="updatePassword-title">
+              <form onSubmit={handleSubmit}>
+                <h2>Update Password</h2>
+                <div className="">
+                  <label htmlFor="old_password_field">Current Password</label>
+                  <input
+                    type="password"
+                    id="old_password_field"
+                    className="form-control"
+                    onChange={(e) => setOldPassword(e.target.value)}
+                    value={oldPassword}
+                  />
+                </div>
 
-              <div className="mb-3">
-                <label htmlFor="new_password_field">New Password</label>
-                <input
-                  type="password"
-                  id="new_password_field"
-                  className="form-control"
-                  onChange={(e) => setPassword(e.target.value)}
-                  value={password}
-                  
-                />
-              </div>
+                <div className="mb-3">
+                  <label htmlFor="new_password_field">New Password</label>
+                  <input
+                    type="password"
+                    id="new_password_field"
+                    className="form-control"
+                    onChange={(e) => setPassword(e.target.value)}
+                    value={password}
+                  />
+                </div>
 
-              <button type="submit" className="updatePassword-btn" disabled={isLoading}>
-                {isLoading ? "Updating Password..." : "Update Password"}
-              </button>
-            </form>
+                <button
+                  type="submit"
+                  className="updatePassword-btn"
+                  disabled={isLoading}
+                >
+                  {isLoading ? "Updating Password..." : "Update Password"}
+                </button>
+              </form>
+            </div>
           </div>
         </div>
-      </div>
-    </UserLayout>
+      </UserLayout>
+    </>
   );
 }

@@ -7,7 +7,8 @@ import { useSelector } from "react-redux";
 import { useLazyLogoutQuery } from "../../redux/api/autApi";
 
 export default function Header() {
-  const { user, isAuthenticated } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.auth);
+  const { cartItems } = useSelector((state) => state.cart);
   const { isLoading } = useGetMeQuery();
   const navigate = useNavigate();
   const [logout, { isSuccess }] = useLazyLogoutQuery();
@@ -33,14 +34,14 @@ export default function Header() {
           <Search />
         </div>
         <div className="nav-right">
-          <a href="/cart">
+          <Link to="/cart">
             <span id="cart" className="ms-3">
               Cart
             </span>
             <span className="Count" id="cart_count">
-              0
+              {cartItems?.length}
             </span>
-          </a>
+          </Link>
           {user ? (
             <div className="dropdown">
               <button className="dropdown-toggle" type="button">
