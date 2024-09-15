@@ -8,6 +8,7 @@ import errorMiddleware from './middlewares/errors.js'
 import productRoutes from './routes/products.js'
 import auth from './routes/auth.js'
 import orderRoutes from './routes/order.js'
+import payment from './routes/payment.js'
 
 //handle uncaught exception
 process.on('uncaughtException',(err) =>{
@@ -35,6 +36,7 @@ connectDatabase();
 app.use("/api/v1",productRoutes)
 app.use("/api/v1",auth)
 app.use("/api/v1",orderRoutes)
+app.use("/api/v1",payment)
 
 
 app.use(errorMiddleware)

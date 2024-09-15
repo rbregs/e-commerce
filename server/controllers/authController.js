@@ -90,7 +90,6 @@ export const forgotPassword = catchAssyncErrors(async (req, res, next) => {
         return next(new ErrorHandler('Email not found', 404));
     }
 
-    console.log('Before generating reset token');
 
     const resetToken = user.getResetPassword();
     await user.save();
@@ -116,8 +115,6 @@ export const resetPassword = catchAssyncErrors(async (req, res, next) => {
       .createHash("sha256")
       .update(req.params.token)
       .digest('hex');
-
-    console.log(`this is reset token in resetPassword beforehashing ${resetPasswordToken}`)
 
     const user = await User.findOne({
       resetPasswordToken,

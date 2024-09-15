@@ -31,8 +31,8 @@ export default function SidebarMenu() {
     const [activeMenuItem,setActiveMenuItem] = useState(location.pathname)
     
     const handleMenuItemClick =(menuItemUrl) => {
-        setActiveMenuItem(menuItemUrl);
-    }
+                                                    setActiveMenuItem(menuItemUrl);
+                                                }
 
     return (
         <div className="list-group mt-3 pl-4">

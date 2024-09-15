@@ -16,6 +16,9 @@ import ForgetPassword from "./components/user/ForgetPassword.jsx";
 import ResetPassword from "./components/auth/ResetPassword.jsx";
 import Cart from "./components/cart/Cart.jsx";
 import Shipping from "./components/cart/Shipping.jsx";
+import ConfirmOrder from "./components/cart/ConfirmOrder.jsx";
+import CheckOutSteps from "./components/cart/CheckOutSteps.jsx";
+import PaymentMethod from "./components/cart/PaymentMethod.jsx";
 
 function App() {
   
@@ -37,8 +40,10 @@ function App() {
               <Route path="/me/update_password" element={<ProtectedRoute><UpdatePassword/></ProtectedRoute>} />
               <Route path="/password/forgot" element={<ForgetPassword />} />
               <Route path="/password/reset/:token" element={<ResetPassword />} />
-              <Route path="/cart" element={<ProtectedRoute><Cart/></ProtectedRoute>} />
-              <Route path="/shipping" element={<ProtectedRoute><Shipping/></ProtectedRoute>} />
+              <Route path="/cart" element={<ProtectedRoute><Cart /></ProtectedRoute>} />
+              <Route path="/shipping" element={<ProtectedRoute><Shipping /></ProtectedRoute>} />
+              <Route path="/confirm_order" element={<ProtectedRoute><ConfirmOrder /></ProtectedRoute>} />
+              <Route path="/payment_method" element={<ProtectedRoute><PaymentMethod /></ProtectedRoute>} />
             </Routes>
           </div>
 

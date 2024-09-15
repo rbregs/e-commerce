@@ -16,9 +16,11 @@ export default function ProductDetails() {
 
   const dispatch = useDispatch()
 
-  const { data, isLoading, error, isError } = useGetProductDetailsQuery(
-    params?.id
-  );
+  const { data,
+         isLoading, 
+         error, 
+         isError } = useGetProductDetailsQuery( params?.id);
+
   const product = data?.product;
 
  
@@ -58,32 +60,32 @@ export default function ProductDetails() {
   // };
 
   const handleAddItem = () => {
-    const count = document.querySelector(".count")
-    if (count.valueAsNumber >= product?.stock) return
-    const qty = count.valueAsNumber + 1
-    setQuantity(qty)
-  };
+                                const count = document.querySelector(".count")
+                                if (count.valueAsNumber >= product?.stock) return
+                                const qty = count.valueAsNumber + 1
+                                setQuantity(qty)
+                              };
 
   const handleSubtractItem = () => {
-    const count = document.querySelector(".count")
-    if (count.valueAsNumber <= 1) return
-    const qty = count.valueAsNumber - 1
-    setQuantity(qty)
-  };
+                                      const count = document.querySelector(".count")
+                                      if (count.valueAsNumber <= 1) return
+                                      const qty = count.valueAsNumber - 1
+                                      setQuantity(qty)
+                                    };
 
   const setItemToCart = () => {
-    console.log('click')
-    const cartItem = {
-      product:product?._id,
-      name:product?.name,
-      price:product?.price,
-      image:product?.images[0]?.url,
-      stock:product?.stock,
-      quantity
-    }
-    dispatch(setCartItems(cartItem))
-    toast.success("Item added to cart")
-  }
+                                  const cartItem = {
+                                      product:product?._id,
+                                      name:product?.name,
+                                      price:product?.price,
+                                      image:product?.images[0]?.url,
+                                      stock:product?.stock,
+                                      quantity
+                                  }
+
+                                dispatch(setCartItems(cartItem))
+                                toast.success("Item added to cart")
+                               }
   return (
     <>
     <MetaData title={"Product Info"} />

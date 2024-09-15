@@ -62,7 +62,6 @@ userSchema.methods.getResetPassword = function() {
 
     // Generate token
     const resetToken = crypto.randomBytes(20).toString('hex');
-    console.log(`this is before hashing in userschema ${resetToken}`)
 
     //hash Token
     this.resetPasswordToken = crypto
@@ -70,7 +69,6 @@ userSchema.methods.getResetPassword = function() {
       .update(resetToken)
       .digest('hex');
 
-      console.log(`Hashed reset token stored in DB: ${this.resetPasswordToken}`);
     //set token expire
     this.resetPasswordExpire = Date.now() + 30 * 60 * 1000;
 

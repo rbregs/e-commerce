@@ -9,7 +9,6 @@ import User from '../models/usermodel.js'
 export const isAuthenticatedUser = catchAssyncErrors(async (req, res, next) => {
 
     const { token } = req.cookies
-    console.log(token)
 
     if (!token) {
         return next(new ErrorHandler('Login first before accessing this resource', 401))
@@ -18,8 +17,6 @@ export const isAuthenticatedUser = catchAssyncErrors(async (req, res, next) => {
     //verify
     const decoded = jwt.verify(token, process.env.JWT_SECRET)
     const user = req.user = await User.findById(decoded.id)
-
-    console.log(user)
 
     next()
 

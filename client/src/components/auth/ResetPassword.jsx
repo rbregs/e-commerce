@@ -13,8 +13,9 @@ export default function ResetPassword() {
   const navigate = useNavigate();
 
   const { isAuthenticated } = useSelector((state) => state.auth);
-  const [resetPassword, { isLoading, error, isSuccess }] =
-    useResetPasswordMutation();
+  const [resetPassword, { isLoading,
+                          error, 
+                          isSuccess }] =useResetPasswordMutation();
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -32,15 +33,15 @@ export default function ResetPassword() {
   }, [error, isSuccess, isAuthenticated]);
 
   const submitDetails = (e) => {
-    e.preventDefault();
-    if (password !== confirmPassword) {
-      toast.error("Passwords do not match");
-      return;
-    }
+                                  e.preventDefault();
+                                  if (password !== confirmPassword) {
+                                    toast.error("Passwords do not match");
+                                    return;
+                                  }
 
-    const data = { password, confirmPassword };
-    resetPassword({ token: params?.token, body: data });
-  };
+                                  const data = { password, confirmPassword };
+                                  resetPassword({ token: params?.token, body: data });
+                                };
 
   return (
     <>

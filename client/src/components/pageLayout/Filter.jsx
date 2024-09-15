@@ -28,37 +28,37 @@ export default function Filter() {
 
   //Category  & ratings filter
   const categoryFilter = (checkbox) => {
-    const checkboxes = document.getElementsByName(checkbox.name);
+                                          const checkboxes = document.getElementsByName(checkbox.name);
 
-    checkboxes.forEach((item) => {
-      if (item !== checkbox) item.checked = false;
-    });
+                                          checkboxes.forEach((item) => {
+                                            if (item !== checkbox) item.checked = false;
+                                          });
 
-    if (checkbox.checked === false) {
-      //delete filter  from query
-      if (searchParams.has(checkbox.name)) {
-        searchParams.delete(checkbox.name);
-        const path = window.location.pathname + "?" + searchParams.toString();
-        navigate(path);
-      }
-    } else {
-      //set new filter value
-      if (searchParams.has(checkbox.name)) {
-        searchParams.set(checkbox.name, checkbox.value);
-      } else {
-        searchParams.append(checkbox.name, checkbox.value);
-      }
-      const path = window.location.pathname + "?" + searchParams.toString();
-      navigate(path);
-    }
-  };
+                                          if (checkbox.checked === false) {
+                                            //delete filter  from query
+                                            if (searchParams.has(checkbox.name)) {
+                                              searchParams.delete(checkbox.name);
+                                              const path = window.location.pathname + "?" + searchParams.toString();
+                                              navigate(path);
+                                            }
+                                          } else {
+                                            //set new filter value
+                                            if (searchParams.has(checkbox.name)) {
+                                              searchParams.set(checkbox.name, checkbox.value);
+                                            } else {
+                                              searchParams.append(checkbox.name, checkbox.value);
+                                            }
+                                            const path = window.location.pathname + "?" + searchParams.toString();
+                                            navigate(path);
+                                          }
+                                        };
 
-  const defaultCheckHandler = (checkboxType, checkboxValue) => {
-    const value = searchParams.get(checkboxType);
-
-    if (checkboxValue == value) return true;
-    return false;
-  };
+  const defaultCheckHandler = (checkboxType,
+                               checkboxValue) => {
+                                                    const value = searchParams.get(checkboxType);
+                                                    if (checkboxValue == value) return true;
+                                                    return false;
+                                                  };
   return (
     <div className="filter">
       <h3>Filters</h3>

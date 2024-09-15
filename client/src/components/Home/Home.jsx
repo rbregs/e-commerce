@@ -26,7 +26,10 @@ export default function Home() {
   ratings !== null && (params.ratings = ratings);  // ratings
 
   
-  const { data, isLoading, error, isError } = useGetProductsQuery(params)
+  const { data,
+          isLoading, 
+          error,
+          isError } = useGetProductsQuery(params)
 
   useEffect(() => {
     if (error) {

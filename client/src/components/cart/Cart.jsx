@@ -10,40 +10,38 @@ export default function Cart() {
   const navigate = useNavigate()
   
   const handleAddItem = (item, quantity) => {
-    const newQty = quantity + 1;
-    if (newQty <= item?.stock) {
-      setItemToCart(item, newQty);
-    }
-  };
+                                              const newQty = quantity + 1;
+                                              if (newQty <= item?.stock) {
+                                                setItemToCart(item, newQty);
+                                              }
+                                            };
   
   const handleSubtractItem = (item, quantity) => {
-    const newQty = quantity - 1;
-    if (newQty > 0) {
-      setItemToCart(item, newQty);
-    }
-  };
+                                                    const newQty = quantity - 1;
+                                                    if (newQty > 0) {
+                                                      setItemToCart(item, newQty);
+                                                    }
+                                                  };
 
   const deleteItem = (id) => {
-    dispatch(removeCartItem(id))
-  };
+                                dispatch(removeCartItem(id))
+                             };
   
   const setItemToCart = (item,newQty) => {
-    console.log('click')
-    const cartItem = {
-      product:item?.product,
-      name:item?.name,
-      price:item?.price,
-      image:item?.image,
-      stock:item?.stock,
-      quantity:newQty
-    }
-    dispatch(setCartItems(cartItem))
-  }
+                                            const cartItem = {
+                                              product:item?.product,
+                                              name:item?.name,
+                                              price:item?.price,
+                                              image:item?.image,
+                                              stock:item?.stock,
+                                              quantity:newQty
+                                            }
+                                            dispatch(setCartItems(cartItem))
+                                          }
 
   const checkOutHandler = () => {
-    navigate('/shipping')
-
-  }
+                                  navigate('/shipping')
+                                }
 
   return (
     <>
@@ -71,7 +69,7 @@ export default function Cart() {
                         />
                       </div>
                       <div className="col-5 col-lg-3">
-                        <Link to={`products/${item?.product}`}> {item?.name} </Link>
+                        <Link to={`/product/${item?.product}`}> {item?.name} </Link>
                       </div>
                       <div className="col-4 col-lg-2 mt-4 mt-lg-0">
                         <p id="card_item_price">{item?.price}</p>

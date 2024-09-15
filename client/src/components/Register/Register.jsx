@@ -6,10 +6,10 @@ import MetaData from "../pageLayout/MetaData";
 
 export default function Register() {
   const [user, setUser] = useState({
-    name: "",
-    email: "",
-    password: "",
-  });
+                                      name: "",
+                                      email: "",
+                                      password: "",
+                                  });
 
   const { name, email, password } = user;
   const navigate = useNavigate();
@@ -28,16 +28,16 @@ export default function Register() {
   }, [error, isAuthenticated]);
 
   const submitDetails = (e) => {
-    e.preventDefault();
+                                  e.preventDefault();
 
-    const registerData = {
-      name,
-      email,
-      password,
-    };
+                                  const registerData = {
+                                    name,
+                                    email,
+                                    password,
+                                  };
 
-    register(registerData);
-  };
+                                  register(registerData);
+                                };
 
   const onChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
