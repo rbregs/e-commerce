@@ -49,7 +49,7 @@ export default function PaymentMethod() {
                                       const orderData = {
                                           orderItems: cartItems,
                                           shippingInfo,
-                                          itemPrice :itemsPrice ,
+                                          itemPrice:itemsPrice,
                                           shippingAmount: shippingPrice,
                                           taxAmount: taxPrice,
                                           totalAmount: totalPrice,

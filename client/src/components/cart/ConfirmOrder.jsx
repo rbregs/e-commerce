@@ -19,8 +19,10 @@ export default function ConfirmOrder() {
         taxPrice,
         totalPrice,} =  calculateOrderCost(cartItems)
                         const proceedToPaymentHandler = () => {
+  
                         navigate('/payment_method')
                        } 
+
 
 
   return (
