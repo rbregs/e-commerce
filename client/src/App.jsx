@@ -21,6 +21,7 @@ import CheckOutSteps from "./components/cart/CheckOutSteps.jsx";
 import PaymentMethod from "./components/cart/PaymentMethod.jsx";
 import { MyOrders } from "./components/order/MyOrders.jsx";
 import { OrderDetails } from "./components/order/orderDetails.jsx";
+import Invoice from "./components/invoice/Invoice.jsx";
 
 function App() {
   
@@ -48,6 +49,7 @@ function App() {
               <Route path="/payment_method" element={<ProtectedRoute><PaymentMethod /></ProtectedRoute>} />
               <Route path="/me/orders" element={<ProtectedRoute><MyOrders /></ProtectedRoute>} />
               <Route path="/me/order/:id" element={<ProtectedRoute><OrderDetails/></ProtectedRoute>} />
+              <Route path="/invoice/order/:id" element={<ProtectedRoute><Invoice/></ProtectedRoute>} />
             </Routes>
           </div>
 

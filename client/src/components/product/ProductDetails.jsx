@@ -4,26 +4,29 @@ import { useParams } from "react-router-dom";
 import { Loader } from "../pageLayout/Loader";
 import toast from "react-hot-toast";
 import StarRatings from "react-star-ratings";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setCartItems } from "../../redux/features/cartSlice";
 import MetaData from "../pageLayout/MetaData";
+import NewReview from "../reviews/NewReview";
+import ListReviews from "../reviews/ListReviews";
 
 export default function ProductDetails() {
   const params = useParams();
 
-  const [quantity,setQuantity] = useState(1)
+  const { isAuthenticated } = useSelector((state) => state.auth);
+
+  const [quantity, setQuantity] = useState(1);
   const [activeImg, setActiveImg] = useState("");
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const { data,
-         isLoading, 
-         error, 
-         isError } = useGetProductDetailsQuery( params?.id);
+  const { data, isLoading, error, isError } = useGetProductDetailsQuery(
+    params?.id
+  );
+
+
 
   const product = data?.product;
-
- 
 
   // ----set default image
   useEffect(() => {
@@ -43,52 +46,52 @@ export default function ProductDetails() {
 
   if (isLoading) return <Loader />;
 
-
   // const handleAddItem = () => {
   //   const count = document.querySelector(".count");
   //   if (count.valueAsNumber >= product?.stock) return;
   //   const qty = count.valueAsNumber + 1;
   //   setQuantity(qty);
   // };
-  
-  
+
   // const handleSubtractItem = () => {
   //   setQuantity((prevQuantity) => {
   //     const newQuantity = prevQuantity - 1;
-  //     return newQuantity < 1 ? 1 : newQuantity; 
+  //     return newQuantity < 1 ? 1 : newQuantity;
   //   });
   // };
 
   const handleAddItem = () => {
-                                const count = document.querySelector(".count")
-                                if (count.valueAsNumber >= product?.stock) return
-                                const qty = count.valueAsNumber + 1
-                                setQuantity(qty)
-                              };
+    const count = document.querySelector(".count");
+    if (count.valueAsNumber >= product?.stock) return;
+    const qty = count.valueAsNumber + 1;
+    setQuantity(qty);
+  };
 
   const handleSubtractItem = () => {
-                                      const count = document.querySelector(".count")
-                                      if (count.valueAsNumber <= 1) return
-                                      const qty = count.valueAsNumber - 1
-                                      setQuantity(qty)
-                                    };
+    const count = document.querySelector(".count");
+    if (count.valueAsNumber <= 1) return;
+    const qty = count.valueAsNumber - 1;
+    setQuantity(qty);
+  };
 
   const setItemToCart = () => {
-                                  const cartItem = {
-                                      product:product?._id,
-                                      name:product?.name,
-                                      price:product?.price,
-                                      image:product?.images[0]?.url,
-                                      stock:product?.stock,
-                                      quantity
-                                  }
+    const cartItem = {
+      product: product?._id,
+      name: product?.name,
+      price: product?.price,
+      image: product?.images[0]?.url,
+      stock: product?.stock,
+      quantity,
+    };
 
-                                dispatch(setCartItems(cartItem))
-                                toast.success("Item added to cart")
-                               }
+    dispatch(setCartItems(cartItem));
+    toast.success("Item added to cart");
+  };
+
+  console.log(product?.reviews)
   return (
     <>
-    <MetaData title={"Product Info"} />
+      <MetaData title={"Product Info"} />
       <div className="productDetails-container">
         <div className="product-container">
           <div className="productImages">
@@ -135,24 +138,36 @@ export default function ProductDetails() {
             <hr />
             <h4>$ {product?.price}</h4>
             <div className="quantitySection">
-              <span className="subtract" onClick={handleSubtractItem}> - </span>
-              <input type="number"
-               id="specific-input" 
-               className="count"
-               value={quantity}
-               disabled />
-              <span className="addition" onClick={handleAddItem}>+</span>
-              <button 
-              className={product.stock === 0 ? "btnCartfaded": "btnCart"}
-              disabled={product.stock === 0}
-              onClick={setItemToCart}
-              > Add to Cart</button>
+              <span className="subtract" onClick={handleSubtractItem}>
+                {" "}
+                -{" "}
+              </span>
+              <input
+                type="number"
+                id="specific-input"
+                className="count"
+                value={quantity}
+                disabled
+              />
+              <span className="addition" onClick={handleAddItem}>
+                +
+              </span>
+              <button
+                className={product.stock === 0 ? "btnCartfaded" : "btnCart"}
+                disabled={product.stock === 0}
+                onClick={setItemToCart}
+              >
+                {" "}
+                Add to Cart
+              </button>
             </div>
             <hr />
             <div className="stockStatus">
               <p>Status: </p>
               <span className={product?.stock > 0 ? "stock" : "outOfStock"}>
-                {product?.stock > 0 ? `In Stock ( ${product?.stock} )` : "Out of Stock"}{" "}
+                {product?.stock > 0
+                  ? `In Stock ( ${product?.stock} )`
+                  : "Out of Stock"}{" "}
               </span>
             </div>
             <hr />
@@ -164,14 +179,27 @@ export default function ProductDetails() {
             <div>
               <p>Sold by: {product.seller} </p>
             </div>
-            <div className="reviewSection">
-              <div className="viewReview">
-                <p>Login to Post your review</p>
+            {isAuthenticated ? (
+              <NewReview productId={product?._id} />
+            ) : (
+              <div className="reviewSection">
+                <div className="viewReview">
+                  <p>Login to post your review</p>
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </div>
+      
+      {product?.reviews?.length > 0 && (
+        <ListReviews reviews={product?.reviews} />
+        
+        
+      )}
+
+ 
+      
     </>
   );
 }

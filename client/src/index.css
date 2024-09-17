@@ -9,7 +9,7 @@ body {
   margin: 0;
   padding: 0;
   background-color: #FFF7F7;
-  padding-top: 4.75rem; 
+  /* padding-top: 4.75rem;  */
   
 }
 
@@ -20,7 +20,7 @@ body {
   align-items: center;
   padding: 0.625rem 1.25rem;
   background-color: FFF7F7;
-  position: fixed;
+  position: sticky;
   width: 100%;
   top: 0;
   z-index: 1000;
@@ -1228,4 +1228,37 @@ hr {
 .redColor {
   color: red !important;
   font-weight: bold !important;
+}
+
+
+/* ---------------------------------------listReview ------------------ */
+
+.list-review-row {
+  display: flex;
+  align-items: flex-start; 
+}
+
+.list-review-avatar {
+  margin-right:1rem; 
+}
+
+.list-review-avatar-img {
+  border-radius: 50%;
+}
+
+.list-review-content {
+  flex: 1;
+}
+
+.list-review-stars {
+  margin-bottom: 0.5rem; 
+}
+
+.list-review-username {
+  color: gray;
+  margin-bottom: 1rem; 
+}
+
+.list-review-comment {
+  margin-top: 0;
 }

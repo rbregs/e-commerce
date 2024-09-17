@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import Product from '../models/product.js'
+import Order from '../models/orderModel.js'
 import ErrorHandler from '../utils/errorHandler.js';
 import APIFilters from '../utils/apiFIlter.js';
 import catchAssyncErrors from '../middlewares/catchAssyncErrors.js';
@@ -30,7 +31,7 @@ export const getProducts = catchAssyncErrors (async (req, res, next) => {
 //get single product
 export const getProductbyId = catchAssyncErrors (async(req,res,next) =>{
 
-        const product = await Product.findById(req.params.id)
+        const product = await Product.findById(req.params.id).populate('reviews.user')
 
         if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
             return next(new ErrorHandler('Invalid ID format', 400));
@@ -166,3 +167,20 @@ export const deleteReview = catchAssyncErrors(async (req, res, next) => {
       product,
     });
   });
+
+//can user Revew
+  export const canUserReview= catchAssyncErrors(async (req, res, next) => {
+
+    const orders = await Order.find({
+        user:req.user._id,
+        "orderItems.product":req.query.productId,
+    })
+
+    if (orders.length ==0) {
+        return res.status(200).json ({canReview: false})
+    }
+
+    res.status(200).json ({
+        canReview:true,
+    })
+})

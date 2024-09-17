@@ -1,5 +1,5 @@
 import express from 'express';
-import { getProducts, newProduct, getProductbyId, updateProduct,deleteProduct, createProductReview, getProductReviews, deleteReview } from '../controllers/productcontroller.js';
+import { getProducts, newProduct, getProductbyId, updateProduct,deleteProduct, createProductReview, getProductReviews, deleteReview, canUserReview } from '../controllers/productcontroller.js';
 import { validateObjectId } from '../middlewares/iderrors.js';
 import  { isAuthenticatedUser,authorizeRoles }  from '../middlewares/authentication.js'
 
@@ -19,5 +19,8 @@ router.route('/reviews')
 
 router.route('/admin/reviews')
 .delete(isAuthenticatedUser,authorizeRoles('admin'),deleteReview)
+
+router.route('/can_review')
+.get(isAuthenticatedUser,canUserReview)
 
 export default router;
