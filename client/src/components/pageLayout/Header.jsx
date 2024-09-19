@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "../../index.css";
 import { Link, useNavigate } from "react-router-dom";
 import Search from "./Search";
@@ -12,6 +12,7 @@ export default function Header() {
   const { isLoading } = useGetMeQuery();
   const navigate = useNavigate();
   const [logout, { isSuccess }] = useLazyLogoutQuery();
+  const [navbar,setNavbar] = useState(false)
 
 
   useEffect(() => {
@@ -21,6 +22,16 @@ export default function Header() {
   const logoutHandler = () => {
     logout();
   };
+
+  // const changeBg = () => {
+  //   if (window.scrollY >= 80) {
+  //     setNavbar(true) 
+  //   }else{
+  //     setNavbar(false)
+  //   }
+  // }
+
+  // window.addEventListener('scroll',changeBg);
 
   return (
     <>
@@ -53,9 +64,9 @@ export default function Header() {
                 <span> {user?.name}</span>
               </button>
               <div className="dropdown-menu">
-                <Link className="dropdown-item" to="/admin/dashboard">
-                  Dashboard
-                </Link>
+                
+                  {user?.role === 'admin' &&(<Link className="dropdown-item" to="/admin/dashboard">Dashboard</Link>)}
+                
                 <Link className="dropdown-item" to="/me/orders">
                   Orders
                 </Link>

@@ -4,6 +4,7 @@ import Order from '../models/orderModel.js'
 import ErrorHandler from '../utils/errorHandler.js';
 import APIFilters from '../utils/apiFIlter.js';
 import catchAssyncErrors from '../middlewares/catchAssyncErrors.js';
+import {uploadFile, delteFile} from "../utils/cloudinary.js"
 
 
 //get all products
@@ -68,6 +69,46 @@ export const updateProduct =catchAssyncErrors (async (req, res) => {
    
 })
 
+// uploadProductImage  admin/products/:id/upload_images
+export const uploadProductImage =catchAssyncErrors (async (req, res) => {
+   
+    let product = await Product.findById(req.params.id);
+    if (!product) {
+        return res.status(404).json({ message: "Product not found" });
+    }
+    const uploader = async(image) => uploadFile(image, "kproducts/products")
+
+    const urls = await Promise.all((req?.body?.images).map(uploader))
+    
+    product?.images?.push(...urls)
+    await product?.save()
+
+    res.status(200).json({ product });
+
+})
+
+// DeleteProductImage  admin/products/:id/delete_images
+export const deleteProductImage =catchAssyncErrors (async (req, res) => {
+   
+    let product = await Product.findById(req.params.id);
+    if (!product) {
+        return res.status(404).json({ message: "Product not found" });
+    }
+   
+    const isDeleted = await delteFile(req.body.imgId)
+   
+    if (isDeleted) {
+        product.images = product?.images?.filter(
+            (img) => img.public_id !== req.body.imgId
+        )
+        await product?.save()
+    }
+
+    res.status(200).json({ product });
+
+})
+
+
 //delete
 export const deleteProduct = catchAssyncErrors(async (req, res) => {
    
@@ -75,6 +116,10 @@ export const deleteProduct = catchAssyncErrors(async (req, res) => {
 
         if (!product) {
             return res.status(404).json({ message: "Product not found" });
+        }
+
+        for(let i=0; i <product?.images.length; i++) {
+            await delteFile(product?.images[i].public_id)
         }
 
         res.status(200).json({ message: "Product deleted" });
@@ -183,4 +228,13 @@ export const deleteReview = catchAssyncErrors(async (req, res, next) => {
     res.status(200).json ({
         canReview:true,
     })
+})
+
+
+export const getAdminProduct = catchAssyncErrors (async(req,res,next) =>{
+
+    const product = await Product.find()
+    res.status(200).json({product})
+
+
 })

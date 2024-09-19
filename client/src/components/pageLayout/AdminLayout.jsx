@@ -15,7 +15,7 @@ export default function AdminLayout({ children }) {
     },
     {
       name: "Products",
-      url: "/admin/product",
+      url: "/admin/products",
       icon: "fab fa-product-hunt",
     },
     {
@@ -41,12 +41,12 @@ export default function AdminLayout({ children }) {
       <div className="userLayout-header">
         <h2 className="userLayout-title">Admin Dashboard</h2>
       </div>
-      {/* <div className="userLayout-userDashboard"> */}
+      <div className="userLayout-userDashboard">
         <div className="userLayout-sidebar">
           <SidebarMenu menuItems={menuItems} />
         </div>
         <div className="userLayout-cmainontent">{children}</div>
       </div>
-    // </div>
+   </div>
   );
 }

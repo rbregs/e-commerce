@@ -1,14 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 export default function SidebarMenu({ menuItems }) {
   const location = useLocation();
-
   const [activeMenuItem, setActiveMenuItem] = useState(location.pathname);
 
   const handleMenuItemClick = (menuItemUrl) => {
     setActiveMenuItem(menuItemUrl);
   };
+
+  // useEffect to log the active menu item when it changes
+  useEffect(() => {
+    console.log("Active menu item:", activeMenuItem);
+  }, [activeMenuItem]);
 
   return (
     <div className="list-group mt-3 pl-4">
@@ -30,9 +34,7 @@ export default function SidebarMenu({ menuItems }) {
           <i
             className={`${menuItem.icon} fa-fw pe-2`}
             style={
-              activeMenuItem.includes(menuItem.url)
-                ? { color: "#8721d4" }
-                : {}
+              activeMenuItem.includes(menuItem.url) ? { color: "#8721d4" } : {}
             }
           ></i>{" "}
           {menuItem.name}

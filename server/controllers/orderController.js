@@ -69,37 +69,37 @@ export const allOrders = catchAssyncErrors(async (req, res, next) => {
 
 // Update Order - ADMIN  =>  /api/v1/admin/orders/:id
 export const updateOrder = catchAssyncErrors(async (req, res, next) => {
-    const order = await Order.findById(req.params.id);
-  
-    if (!order) {
-      return next(new ErrorHandler("No Order found with this ID", 404));
+  const order = await Order.findById(req.params.id);
+
+  if (!order) {
+    return next(new ErrorHandler("No Order found with this ID", 404));
+  }
+
+  if (order?.orderStatus === "Delivered") {
+    return next(new ErrorHandler("You have already delivered this order", 400));
+  }
+
+  // Update products stock
+  await Promise.all(order.orderItems.map(async (item) => {
+    const product = await Product.findById(item.product.toString());
+    if (!product) {
+      return next(new ErrorHandler("No Product found with this ID", 404));
     }
-  
-    if (order?.orderStatus === "Delivered") {
-      return next(new ErrorHandler("You have already delivered this order", 400));
-    }
-  
-    // Update products stock
-    await Promise.all(order.orderItems.map(async (item) => {
-      const product = await Product.findById(item.product.toString());
-      if (!product) {
-        return next(new ErrorHandler("No Product found with this ID", 404));
-      }
-      product.stock = product.stock - item.quantity;
-      await product.save({ validateBeforeSave: false });
-    }));
-  
-    // Update order status and delivery date
-    order.orderStatus = req.body.orderStatus; // Extract orderStatus from req.body
-    order.deliveredAt = Date.now();
-  
-    await order.save();
-  
-    res.status(200).json({
-      success: true,
-    });
+    product.stock = product.stock - item.quantity;
+    await product.save({ validateBeforeSave: false });
+  }));
+
+  // Update order status and delivery date
+  order.orderStatus = req.body.orderStatus; // Extract orderStatus from req.body
+  order.deliveredAt = Date.now();
+
+  await order.save();
+
+  res.status(200).json({
+    success: true,
   });
-  
+});
+
 
 // Delete order  =>  /api/v1/admin/orders/:id
 export const deleteOrder = catchAssyncErrors(async (req, res, next) => {
@@ -113,5 +113,96 @@ export const deleteOrder = catchAssyncErrors(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
+  });
+});
+
+//salesFunction
+
+// Function to get sales data based on date range
+async function getSalesData(startDate, endDate) {
+  const salesData = await Order.aggregate([
+    {
+      // Stage 1: Filter orders by creation date
+      $match: {
+        createdAt: {
+          $gte: new Date(startDate),
+          $lte: new Date(endDate),
+        }
+      }
+    },
+    {
+      // Stage 2: Group orders by date and calculate total sales and number of orders
+      $group: {
+        _id: {
+          date: { $dateToString: { format: "%Y-%m-%d", date: "$createdAt" } }
+        },
+        totalSales: { $sum: '$totalAmount' },
+        numOrder: { $sum: 1 } // Count the number of orders
+      }
+    }
+  ]);
+
+  //create a map tp store sales data and number of order by data
+  const salesMap = new Map()
+
+  let totalsales = 0
+  let totalNumOrders = 0
+
+
+  salesData.forEach((entry) => {
+    const date = entry?._id.date;
+    const sales = entry?.totalSales;
+    const numOrders = entry?.numOrder;
+
+    salesMap.set(date, { sales, numOrders })
+    totalsales += sales
+    totalNumOrders += numOrders
+  })
+
+  //generate array of date between start & end date
+  const datesBetween = getDatesBetween(startDate, endDate)
+
+  //create final sales data array with o for dates without sale
+  const finalSalesData = datesBetween.map((date) => ({
+    date,
+    sales: (salesMap.get(date) || { sales: 0 }).sales,
+    numOrders: (salesMap.get(date) || { numOrders: 0 }).numOrders
+  }))
+
+  console.log(finalSalesData)
+  return { salesData: finalSalesData, totalsales, totalNumOrders }
+}
+
+function getDatesBetween(startDate, endDate) {
+  let dates = []
+  let currentDate = new Date(startDate)
+
+  while (currentDate <= new Date(endDate)) {
+    const formattedDate = currentDate.toISOString().split("T")[0]
+    dates.push(formattedDate)
+    currentDate.setDate(currentDate.getDate() + 1)
+  }
+
+
+  return dates;
+}
+
+// Get sales data for the given date range => /api/v1/admin/get_sales
+export const getSales = catchAssyncErrors(async (req, res, next) => {
+
+  const startDate = new Date(req.query.startDate);
+  const endDate = new Date(req.query.endDate);
+
+  startDate.setUTCHours(0, 0, 0, 0);
+  endDate.setUTCHours(23, 59, 59, 999);
+
+  const { salesData, totalsales, totalNumOrders } = await getSalesData(startDate, endDate);
+
+  res.status(200).json({
+    success: true,
+     
+    totalNumOrders, 
+    totalsales,
+    sales: salesData,
   });
 });
