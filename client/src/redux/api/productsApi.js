@@ -99,6 +99,10 @@ export const productApi = createApi({
       },
       invalidatesTags: [ "AdminProducts"]
     }),
+
+    getProductreviews: builder.query({
+      query: (productId) => `/reviews?id=${productId}`,
+    }),
   }),
 });
 
@@ -111,4 +115,5 @@ export const { useGetProductsQuery,
   useUpdateProductMutation,
   useUploadProductImagesMutation,
   useDeleteProductImageMutation,
-  useDeleteProductMutation } = productApi;
+  useDeleteProductMutation,
+  useLazyGetProductreviewsQuery} = productApi;

@@ -205,11 +205,12 @@ export const getUserDetails = catchAssyncErrors(async (req,res,next) => {
     // const { id } = req.params
    
     const user = await User.findById(req.params.id)
+
     
     if(!user) {
         return next(new ErrorHandler(`user not found with id ${req.params.id}` ,404 ))
     }
-
+  
     res.status(200).json({
         user,
     })
@@ -225,9 +226,16 @@ export const updateUser = catchAssyncErrors(async (req,res,next) => {
         role: req.body.role, 
     }
 
-    const user = await User.findByIdAndUpdate(req.params.id, newUserData, {new: true})
+    const user = await User.findByIdAndUpdate(
+        req.params.id, 
+        newUserData, 
+        { new: true, runValidators: true }
+      );
+      
 
     // user.save()
+
+    console.log('Role being updated:', req.body.role);
 
     res.status(200).json({
         user
@@ -237,13 +245,18 @@ export const updateUser = catchAssyncErrors(async (req,res,next) => {
 
 //delete user
 export const deleteUser = catchAssyncErrors(async (req,res,next) => {
-    const user = await User.findById(req.user.id)
+    const user = await User.findById(req.params.id)
 
     if(!user) {
         return next(new ErrorHandler(`user not found with id ${req.params.id}` ,404 ))
     }
 
     //-----------------------------****TO DO ****---------------------- Remove user avatar from cloudinary
+
+    if(user?.avatar?.public_id) {
+        await delteFile(user?.avatar?.public_id)
+    }
+
     await user.deleteOne()
 
     res.status(200).json({

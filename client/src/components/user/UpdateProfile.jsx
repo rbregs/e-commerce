@@ -35,11 +35,11 @@ export default function UpdateProfile() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const loginData = {
+    const userData = {
       name,
       email,
     };
-    updateProfile(loginData);
+    updateProfile(userData);
   };
 
   return (

@@ -9,10 +9,10 @@ export default function SidebarMenu({ menuItems }) {
     setActiveMenuItem(menuItemUrl);
   };
 
-  // useEffect to log the active menu item when it changes
-  useEffect(() => {
-    console.log("Active menu item:", activeMenuItem);
-  }, [activeMenuItem]);
+  // // useEffect to log the active menu item when it changes
+  // useEffect(() => {
+  //   console.log("Active menu item:", activeMenuItem);
+  // }, [activeMenuItem]);
 
   return (
     <div className="list-group mt-3 pl-4">

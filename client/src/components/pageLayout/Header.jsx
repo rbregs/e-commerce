@@ -9,7 +9,7 @@ import { useLazyLogoutQuery } from "../../redux/api/autApi";
 export default function Header() {
   const { user } = useSelector((state) => state.auth);
   const { cartItems } = useSelector((state) => state.cart);
-  const { isLoading } = useGetMeQuery();
+  const { isLoading  } = useGetMeQuery();
   const navigate = useNavigate();
   const [logout, { isSuccess }] = useLazyLogoutQuery();
   const [navbar,setNavbar] = useState(false)

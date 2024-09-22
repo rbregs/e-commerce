@@ -79,15 +79,32 @@ export const updateOrder = catchAssyncErrors(async (req, res, next) => {
     return next(new ErrorHandler("You have already delivered this order", 400));
   }
 
+  let productNotFound = false
+
   // Update products stock
-  await Promise.all(order.orderItems.map(async (item) => {
+  // await Promise.all(order.orderItems.map(async (item) => {
+  //   const product = await Product.findById(item.product.toString());
+  //   if (!product) {
+  //     productNotFound =true
+  //     break
+  //   }
+  //   product.stock = product.stock - item.quantity;
+  //   await product.save({ validateBeforeSave: false });
+  // }));
+
+  for (const item of order.orderItems) {
     const product = await Product.findById(item.product.toString());
     if (!product) {
-      return next(new ErrorHandler("No Product found with this ID", 404));
+      productNotFound = true;
+      break; 
     }
     product.stock = product.stock - item.quantity;
     await product.save({ validateBeforeSave: false });
-  }));
+  }
+
+  if (productNotFound) {
+    return next(new ErrorHandler("No Product found with this ID", 404));
+  }
 
   // Update order status and delivery date
   order.orderStatus = req.body.orderStatus; // Extract orderStatus from req.body
@@ -169,7 +186,6 @@ async function getSalesData(startDate, endDate) {
     numOrders: (salesMap.get(date) || { numOrders: 0 }).numOrders
   }))
 
-  console.log(finalSalesData)
   return { salesData: finalSalesData, totalsales, totalNumOrders }
 }
 

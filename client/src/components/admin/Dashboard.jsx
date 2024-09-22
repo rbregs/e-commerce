@@ -43,8 +43,6 @@ export default function Dashboard() {
 
   }
 
-  console.log(data)
-
   return (
     <>
       <AdminLayout>

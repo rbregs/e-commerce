@@ -3,13 +3,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { useRegisterMutation } from "../../redux/api/autApi";
 import toast from "react-hot-toast";
 import MetaData from "../pageLayout/MetaData";
+import { useSelector } from "react-redux";
 
 export default function Register() {
   const [user, setUser] = useState({
-                                      name: "",
-                                      email: "",
-                                      password: "",
-                                  });
+      name: "",
+      email: "",
+      password: "",
+  });
 
   const { name, email, password } = user;
   const navigate = useNavigate();
@@ -26,6 +27,7 @@ export default function Register() {
       toast.error(error?.data.message);
     }
   }, [error, isAuthenticated]);
+
 
   const submitDetails = (e) => {
                                   e.preventDefault();
@@ -45,7 +47,7 @@ export default function Register() {
 
   return (
     <>
-      <MetaData title={"Register"}> 
+      <MetaData title={"Register"}/> 
         <form method="post" className="loginForm" onSubmit={submitDetails}>
           <h5>Register</h5>
           <div className="loginFields">
@@ -82,7 +84,6 @@ export default function Register() {
             </p>
           </div>
         </form>
-      </MetaData>
     </>
   );
 }
