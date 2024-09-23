@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import CustomPagination from "../pageLayout/CustomPagination.jsx";
 import { useSearchParams } from "react-router-dom";
 import Filter from "../pageLayout/Filter.jsx";
+import MyCarousel from "../pageLayout/MyCarousel.jsx";
 
 export default function Home() {
   let [searchParams] = useSearchParams();
@@ -42,16 +43,17 @@ export default function Home() {
   return (
     <>
       <MetaData title={"Buy Best Product Online"} />
+      <MyCarousel />
       <div className="container">
-        <div className="home-layout">
+        <div className="row">
           {keyword && (
-            <div className="custom-col">
+            <div className="col-3">
               {/* <div className="">  FILTERS */}
               <Filter />
               {/* </div> */}
             </div>
           )}
-          <div className="product-result">
+          <div className="product">
             <h1>
               {keyword
                 ? `${data?.products?.length} Product found with keyword ${keyword}`
