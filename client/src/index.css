@@ -671,12 +671,13 @@ hr {
   display: flex;
   flex-direction: column;
   width: 50%;
-  border: 1px solid rgb(126, 117, 117);
   padding: 2rem;
   margin: 0 auto;
   margin-top: 5rem;
   border-radius: 0.5rem;
-  box-shadow: 0 0 12px 8px rgba(5, 199, 47, 0.1);
+  box-shadow: var(--color-shadow);
+  background-color: var(--color-primary);
+
 }
 
 .loginForm h5 {
@@ -695,8 +696,8 @@ hr {
 .loginFields input {
   width: 20rem;
   height: 2.5rem;
-  border: 1px solid rgb(126, 117, 117);
-  box-shadow: 0 0 12px 8px rgba(5, 199, 47, 0.1);
+  border: 1px solid var(--color-border);
+  /* box-shadow: var(--color-shadow); */
   padding: 0 1rem; 
 }
 
@@ -730,15 +731,16 @@ hr {
 }
 
 .loginForm  button {
-  background-color: wheat;
+  background-color:var(--color-secondary);
   width: 20rem;
   padding: 0.25rem;
-  border: 1px solid rgb(126, 117, 117);
+  /* border: 1px solid rgb(126, 117, 117); */
+  border: none;
 }
 
 
 .loginForm  button:hover {
-  background-color: rgb(212, 181, 123);
+  background-color: var(--color-hover);
 }
 
 .registerLink a {
@@ -750,6 +752,94 @@ hr {
   color: #8687db;
 }
 
+@media (max-width:435px) {
+  .loginForm {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    padding: 2rem;
+    margin: 0 auto;
+    margin-top: 2rem;
+    border-radius: 0.5rem;
+    box-shadow: var(--color-shadow);
+    background-color: var(--color-primary);
+  
+  }
+  
+  .loginForm h5 {
+    text-align: center;
+    padding: 0.5rem;
+    font-size: 1rem;
+  }
+  
+  .loginFields {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+
+  }
+  
+  .loginFields input {
+    width: 15rem;
+    height: 2.5rem;
+    border: 1px solid var(--color-border);
+    padding: 0 1rem; 
+  }
+  
+  .passwordWrapper {
+    position: relative;
+    width: 15rem; 
+    transition: 0.3s ease;
+  }
+  
+  .forgetPass {
+    position: absolute;
+    right: 1rem; 
+    top: 50%;
+    transform: translateY(-50%);
+    color: blue;
+    text-decoration: none;
+    font-size: 0.1rem;
+    /* opacity: 1; */
+    visibility: visible;
+    transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out; 
+  }
+  
+  .forgetPass a {
+    text-decoration: none;
+    color: #888;
+  }
+  
+  .forgetPass a:hover {
+    text-decoration: underline;
+    color: black;
+  }
+  
+  .loginForm  button {
+    background-color:var(--color-primary);
+    width: 15rem;
+    padding: 0.25rem;
+    /* border: 1px solid rgb(126, 117, 117); */
+    border: none;
+  }
+  
+  
+  .loginForm  button:hover {
+    background-color: var(--color-hover);
+  }
+  
+  .registerLink a {
+    text-decoration: none;
+    color: #0a0efa;
+  }
+  .registerLink a:hover {
+    text-decoration: underline;
+    color: #8687db;
+  }
+
+}
 
 /* -----------------------------user layout */
 .container-fluid {
@@ -1319,11 +1409,11 @@ hr {
   padding: 0.5rem;
   width: 6rem;
   border-radius: 0.5rem;
-  background-color:#C68FE6;
+  background-color:var(--color-primary);
 }
 
 .db-btn:hover {
-  background-color:#8687db;
+  background-color:var(--color-hover);
 }
 
 
@@ -1392,14 +1482,64 @@ CNP-wrapper {
 
 /* -----------------------carousel---------------------- */
 .carousel-item {
-  height: 680px;
+  height: 90vh;
+
 }
 
 .carousel-item img {
   object-fit: cover;
   height: 100%; 
-  width: 100%; 
+  width: 100vw; 
 }
+
+.container-fluid button {
+  border: none;
+}
+
+.carousel-caption-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); 
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+  z-index: 1; 
+}
+
+.carousel-caption {
+  position: relative;
+  margin-right:70rem;
+  text-align: left;
+  margin-top: 25rem;
+  color: white; 
+  z-index: 2; 
+}
+
+.carousel-caption p {
+ color: white;
+}
+
+  .container-fluid button {
+    border: none;
+  }
+
+  .carousel-caption-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); 
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    z-index: 1; 
+  }
+  
+
 
 .container-fluid button {
   background-color: rgb(195, 237, 240);

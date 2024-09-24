@@ -23,7 +23,7 @@ export default function SidebarMenu({ menuItems }) {
           className="fw-bold list-group-item list-group-item-action"
           style={
             activeMenuItem.includes(menuItem.url)
-              ? { backgroundColor: "#f0f0f0", color: " #8721d4" }
+              ? { backgroundColor: "#FFC2D1 ", color: " " }
               : {}
           }
           onClick={() => handleMenuItemClick(menuItem.url)}
@@ -34,7 +34,7 @@ export default function SidebarMenu({ menuItems }) {
           <i
             className={`${menuItem.icon} fa-fw pe-2`}
             style={
-              activeMenuItem.includes(menuItem.url) ? { color: "#8721d4" } : {}
+              activeMenuItem.includes(menuItem.url) ? { color: "#FB6F92" } : {}
             }
           ></i>{" "}
           {menuItem.name}
