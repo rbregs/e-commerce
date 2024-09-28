@@ -9,38 +9,41 @@ export default function Profile() {
   //     return <p></p>;
   // }
 
+  console.log(user)
+
   return (
     <>
       <MetaData title={"Profile"}/>
         <UserLayout>
-          <div className="MUP-userInfo">
-            <div className="MUP-avatar">
-              <figure>
-                <img
-                  className="MUP-avatarimage"
-                  src={
-                    user?.avatar
-                      ? user?.avatar.url
-                      : "../public/images/avatar.png"
-                  }
-                  alt={user?.name || "User Avatar"}
-                />
-              </figure>
-            </div>
+        <div className="row">
+        <div className="col-md-4 text-center">
+          <figure className="border mx-5 my-5 rounded-circle" style={{ width: '150px', height: '150px', overflow: 'hidden' }}>
+            <img
+              className="img-fluid"
+              src={user?.avatar? user?.avatar?.url : "../public/images/avatar.png"}
+              alt="User Avatar"
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover', 
+              }} 
+            />
+          </figure>
+        </div>
 
-            <div className="userInfoDetails">
-              <h4>Full Name</h4>
-              <p>{user?.name}</p>
-              <hr />
+        <div className="col-md-8">
+          <h4>Full Name</h4>
+          <p>{user?.name}</p>
+          <hr />
 
-              <h4>Email Address</h4>
-              <p>{user.email}</p>
-              <hr />
+          <h4>Email Address</h4>
+          <p>{user?.email}</p>
+          <hr />
 
-              <h4>Joined On</h4>
-              <p>{user?.createdAt.substring(0, 10)}</p>
-            </div>
-          </div>
+          <h4>Joined On</h4>
+          <p>{user?.createdAt.substring(0,10)}</p>
+        </div>
+      </div>
         </UserLayout>
     </>
   );

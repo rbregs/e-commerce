@@ -4,18 +4,23 @@ import StarRatings from "react-star-ratings";
 
 export default function ProductItem({ product }) {
   return (
-    <>
-      <section id="products">
-        <div className="row">
-          <img src={product?.images[0]?.url} alt="Product" />
-          {/* <img src="../images/Product/sample.png" alt="Product" /> */}
-
+    <div className="p-1 mx-3">
+      <div className="row justify-content-center border">
+        {/* Card 1 */}
+        <div className="card w-100">
+          <img
+            src={product?.images[0]?.url}
+            alt="Product"
+            className="card-img-top" 
+          />
           <div className="card-body">
-            <h6>
+            <h5 className="card-title text-truncate">
               <Link to={`/product/${product?._id}`}>{product?.name}</Link>
-            </h6>
-
-            <div className="ratings">
+            </h5>
+            <p className="card-text py-1">
+              <span className="price">{`$${product?.price}`}</span>
+            </p>
+            <div className="d-flex align-items-center mx-auto">
               <div className="star-ratings">
                 <StarRatings
                   rating={product?.ratings}
@@ -26,18 +31,13 @@ export default function ProductItem({ product }) {
                   starSpacing="0.25rem"
                 />
               </div>
-              <span id="no_of_reviews" className="reviews">
+              <span id="no_of_reviews" className="reviews ms-2 mt-1">
                 ({product?.numOfReviews})
               </span>
             </div>
-            <p className="price">{`$${product?.price}`}</p>
-            <div className="btnDetails"><Link to={`/product/${product?._id}`} className="view">
-              View Details
-            </Link></div>
-            
           </div>
         </div>
-      </section>
-    </>
+      </div>
+    </div>
   );
 }

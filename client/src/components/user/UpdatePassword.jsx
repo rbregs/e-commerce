@@ -40,7 +40,7 @@ export default function UpdatePassword() {
       <MetaData title={"Update Password"} />
       <UserLayout>
         <div className="updatePassword-wrapper">
-          <div className="updatePassword-container">
+          <div className="col-10 col-lg-8">
             <div className="updatePassword-title">
               <form onSubmit={handleSubmit}>
                 <h2>Update Password</h2>
@@ -68,7 +68,7 @@ export default function UpdatePassword() {
 
                 <button
                   type="submit"
-                  className="updatePassword-btn"
+                   className="btn w-100 py-2 updateProfile-btn"
                   disabled={isLoading}
                 >
                   {isLoading ? "Updating Password..." : "Update Password"}

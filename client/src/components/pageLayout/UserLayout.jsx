@@ -1,43 +1,42 @@
-import React from "react";
-import SidebarMenu from "./SidebarMenu";
+import React from 'react';
+import SidebarMenu from './SidebarMenu';
 
-export default function UserLayout({ children }) {
+export default function UserLayout({children}) {
 
-  
-  const menuItems = [
-    {
-        name:"Profile",
-        url:"/me/profile",
-        icon:"fas fa-user"
-    },
-    {
-        name:"Update Profile",
-        url:"/me/update_profile",
-        icon:"fas fa-user"
-    },
-    {
-        name:"Update Avatar",
-        url:"/me/upload_avatar",
-        icon:"fas fa-user-circle"
-    },
-    {
-        name:"Update Password",
-        url:"/me/update_password",
-        icon:"fas fa-lock"
-    },
-]
-
+    const menuItems = [
+        {
+            name:"Profile",
+            url:"/me/profile",
+            icon:"fas fa-user"
+        },
+        {
+            name:"Update Profile",
+            url:"/me/update_profile",
+            icon:"fas fa-user"
+        },
+        {
+            name:"Update Avatar",
+            url:"/me/upload_avatar",
+            icon:"fas fa-user-circle"
+        },
+        {
+            name:"Update Password",
+            url:"/me/update_password",
+            icon:"fas fa-lock"
+        },
+    ]
+    
   return (
-    <div className="userLayout-container">
-      <div className="userLayout-header">
-        <h2 className="userLayout-title">User Settings</h2>
-      </div>
-      <div className="userLayout-content">
-        <div className="userLayout-userDashboard">
-          <div className="userLayout-sidebar">
-            <SidebarMenu menuItems ={menuItems}/>
-          </div>
-          <div className="userLayout-cmainontent">{children}</div>
+    <div className="userLayout border p-3">
+      <h3 className="border mx-auto text-center w-100">
+        User Settings
+      </h3>
+      <div className='row mt-5'>
+        <div className='col-md-3 ms-5 mx-3 border'>
+            <SidebarMenu menuItems={menuItems} />
+        </div>
+        <div className='col-md-6  ms-5 border'>
+          {children}
         </div>
       </div>
     </div>

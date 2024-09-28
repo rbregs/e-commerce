@@ -1,14 +1,16 @@
 :root {
     --color-text:black; 
-    --color-primary: #FB6F92; /* Dark Green for primary elements */
+    --color-primary: #F8BBD0; /* Dark Green for primary elements */
     --color-secondary:#FF8FAB;
+    --color-dark:black;
     /* --color-secondary: #FFFDD0;  */
     /* --color-accent: #FFD700;  */
     /* --color-dark: #333333;  */
     --color-border:#FFB3C6;
-    --color-bg:#FFE5EC; /* Light gray background to complement the cream */
+    --color-bg:#FCE4EC; /* Light gray background to complement the cream */
     --color-shadow-primary: 0.5rem 0.1rem 10rem 0.1rem #DD2C2F;
     --color-shadow: 0 0 12px 8px #f7b0b1;
     --font-robot:"Roboto";
-    --color-hover:#FFC2D1;
+    --color-hover:#F48FB1;
+    --color-accent:#EC407A;
 }

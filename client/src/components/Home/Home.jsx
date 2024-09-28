@@ -8,35 +8,33 @@ import CustomPagination from "../pageLayout/CustomPagination.jsx";
 import { useSearchParams } from "react-router-dom";
 import Filter from "../pageLayout/Filter.jsx";
 import MyCarousel from "../pageLayout/MyCarousel.jsx";
+import ProductofTheMonth from "../product/ProductOfTheMonth.jsx";
+import AnotherSection from "../pageLayout/Section.jsx";
 
-export default function Home() {
+export default function Home({product}) {
   let [searchParams] = useSearchParams();
 
   const page = searchParams.get("page") || 1;
   const keyword = searchParams.get("keyword") || "";
-  const min = searchParams.get("min"); //price search
+  const min = searchParams.get("min"); // price search
   const max = searchParams.get("max");
-  const category = searchParams.get("category");  //category search 
-  const ratings = searchParams.get("ratings");  //category search 
+  const category = searchParams.get("category"); // category search
+  const ratings = searchParams.get("ratings"); // category search
 
   const params = { page, keyword };
 
-  min !== null && (params.min = min);  //price search
-  max !== null && (params.max = max);
-  category !== null && (params.category = category);  // category
-  ratings !== null && (params.ratings = ratings);  // ratings
+  if (min !== null) params.min = min; // price search
+  if (max !== null) params.max = max;
+  if (category !== null) params.category = category; // category
+  if (ratings !== null) params.ratings = ratings; // ratings
 
-  
-  const { data,
-          isLoading, 
-          error,
-          isError } = useGetProductsQuery(params)
+  const { data, isLoading, error, isError } = useGetProductsQuery(params);
 
   useEffect(() => {
     if (error) {
       toast.error(error?.data?.message);
     }
-  }, [isError]);
+  }, [isError, error]);
 
   if (isLoading) return <Loader />;
 
@@ -44,31 +42,41 @@ export default function Home() {
     <>
       <MetaData title={"Buy Best Product Online"} />
       <MyCarousel />
-      <div className="container">
-        <div className="row">
-          {keyword && (
-            <div className="col-3">
-              {/* <div className="">  FILTERS */}
-              <Filter />
-              {/* </div> */}
-            </div>
-          )}
-          <div className="product">
-            <h1>
-              {keyword
-                ? `${data?.products?.length} Product found with keyword ${keyword}`
-                : "Latest Products"}
-            </h1>
-            <div className={keyword ? "col2" : "col"}>
-              {data?.products?.map((product) => (
-                <ProductItem key={product._id} product={product} />
-              ))}
-            </div>
-            <CustomPagination
-              resPerPage={data?.resPerPage}
-              filteredProductsCount={data?.filteredProductsCount}
-            />
+      <div className="row">
+        {/* Display filters if keyword is present */}
+        {keyword && (
+          <div className="col-md-3">
+            <Filter />
           </div>
+        )}
+
+        <div className={keyword ? "col-9" : "col-12"}>
+          <h1 className="my-4 text-center">
+            {keyword
+              ? `${data?.products?.length} Product(s) found with keyword "${keyword}"`
+              : "FEATURED PRODUCTS"}
+          </h1>
+
+          <div className="row ">
+            
+            {data?.products?.map((product) => (
+              <div
+                className="col-lg-3 col-md-4 col-sm-6 col-12 mb-4" 
+                key={product._id}
+              >
+                <ProductItem product={product} />
+              </div>
+            ))}
+          </div>
+
+          {/* Pagination component */}
+          {/* <CustomPagination
+            resPerPage={data?.resPerPage}
+            filteredProductsCount={data?.filteredProductsCount}
+          /> */}
+          <ProductofTheMonth product ={product}/>
+          <hr/>
+          <AnotherSection />
         </div>
       </div>
     </>

@@ -46,9 +46,8 @@ export default function UpdateProfile() {
     <>
       <MetaData title={"Update Profile"} />
       <UserLayout>
-        <div className="updatePassword-wrapper">
-          <div className="updatePassword-container">
-            <div className="updatePassword-title">
+          <div className="row wrapper">
+            <div className="col-10 col-lg-8">
               <form action="#" method="post" onSubmit={handleSubmit}>
                 <h2>Update Profile</h2>
                 <div className="">
@@ -75,13 +74,12 @@ export default function UpdateProfile() {
                   />
                 </div>
 
-                <button type="submit" className="updatePassword-btn">
+                <button type="submit" className="updateProfile-btn btn w-100">
                   Update Password
                 </button>
               </form>
             </div>
           </div>
-        </div>
       </UserLayout>
     </>
   );

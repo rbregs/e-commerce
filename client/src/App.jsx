@@ -14,7 +14,7 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <div className="App">
+        <div className="container-fluid d-flex flex-column min-vh-100 ">
           <Toaster position="top-center" />
           <Header />
           <div className="app-container">

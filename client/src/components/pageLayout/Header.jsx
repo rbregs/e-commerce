@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "../../index.css";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import Search from "./Search";
@@ -15,6 +15,11 @@ export default function Header() {
   const [logout, { isSuccess }] = useLazyLogoutQuery();
   const [navbar, setNavbar] = useState(false);
 
+  const [showSearch, setShowSearch] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const searchContainerRef = useRef(null);
+  const searchIconRef = useRef(null);
+
   useEffect(() => {
     if (isSuccess) navigate(0); 
   }, [isSuccess, navigate]);
@@ -23,71 +28,162 @@ export default function Header() {
     logout();
   };
 
+  const handleClickOutside = (e) => {
+    if (
+      searchContainerRef.current &&
+      !searchContainerRef.current.contains(e.target) &&
+      searchIconRef.current &&
+      !searchIconRef.current.contains(e.target)
+    ) {
+      setShowSearch(false);
+      console.log("clicked outside");
+    }
+  };
 
-  const isAuthPage = location.pathname === "/login" || location.pathname === "/register";
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  // const isAuthPage = location.pathname === "/login" || location.pathname === "/register";
 
   return (
     <>
-      <nav className="nav-container">
-        <div className="navbar-brand">
-          <Link to="/" className="Logo">
-            Logo
-          </Link>
+      <nav className="navbar navbar-expand-lg ">
+        <button
+          className="navbar-toggler"
+          type="button"
+          onClick={() => setMenuOpen(!menuOpen)}
+          aria-controls="navbarNav"
+          aria-expanded={menuOpen}
+          aria-label="Toggle navigation"
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
+        <Link to="/" className="navbar-brand mx-auto ms-5">
+          Logo
+        </Link>
+
+        <div
+          className={`collapse navbar-collapse ${menuOpen ? "show" : ""}`}
+          id="navbarNav"
+        >
+          <div className="navbar-nav">
+            {/* <a className="nav-link ms-2" href="#home">
+              Home
+            </a> */}
+            <a className="nav-link ms-2" href="#about">
+              About
+            </a>
+            <a className="nav-link ms-2" href="#shop">
+              Products
+            </a>
+            <a className="nav-link ms-2" href="#blog">
+              Blog
+            </a>
+          </div>
         </div>
 
-        {!isAuthPage && (
-          <>
-            <div className="formContainer">
-              <Search />
+        <div className="d-flex align-items-center">
+          <span className="headerCart p-2 m-0">
+            <i className="fa-solid fa-cart-shopping"></i> (0)
+          </span>
+          {user ? (
+            <div className="dropdown">
+              <button
+                className="btn dropdown-toggle d-flex align-items-center"
+                type="button"
+                id="dropDownMenuButton"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <figure className="avatar avatar-nav me-2 mb-0">
+                  <img
+                    src= {user?.avatar ? user?.avatar.url : "../public/images/avatar.png"}
+                    className="rounded-circle"
+                    style={{ width: "40px", height: "40px", objectFit: "cover" }}
+                    // alt="User Avatar"
+                  />
+                </figure>
+                <span className="p-2">{user?.name}</span>
+              </button>
+              <ul
+                className="dropdown-menu"
+                aria-labelledby="dropDownMenuButton"
+              >
+                {user?.role ==="admin" && (
+                  <li>
+                  <a className="dropdown-item" href="/admin/dashboard">
+                    Dashboard
+                  </a>
+                </li>
+                )}
+                
+                <li>
+                  <a className="dropdown-item" href="/me/orders">
+                    Orders
+                  </a>
+                </li>
+                <li>
+                  <a className="dropdown-item" href="/me/profile">
+                    Profile
+                  </a>
+                </li>
+                <li>
+                  <a className="dropdown-item text-danger" href="/">
+                    Logout
+                  </a>
+                </li>
+              </ul>
             </div>
-            <div className="nav-right">
-              <Link to="/cart">
-                <span id="cart" className="ms-3">
-                  Cart
-                </span>
-                <span className="Count" id="cart_count">
-                  {cartItems?.length}
-                </span>
-              </Link>
-              {user ? (
-                <div className="dropdown">
-                  <button className="dropdown-toggle" type="button">
-                    <figure className="avatar-nav">
-                      <img
-                        src={user?.avatar ? user?.avatar.url : "../public/images/avatar.png"}
-                        alt="User Avatar"
-                      />
-                    </figure>
-                    <span> {user?.name}</span>
-                  </button>
-                  <div className="dropdown-menu">
-                    {user?.role === 'admin' && (
-                      <Link className="dropdown-item" to="/admin/dashboard">
-                        Dashboard
-                      </Link>
-                    )}
-                    <Link className="dropdown-item" to="/me/orders">
-                      Orders
-                    </Link>
-                    <Link className="dropdown-item" to="/me/profile">
-                      Profile
-                    </Link>
-                    <Link className="dropdown-item text-danger" to="/" onClick={logoutHandler}>
-                      Logout
-                    </Link>
-                  </div>
-                </div>
-              ) : (
-                !isLoading && (
-                  <Link to="/login" className="btnLogin" id="login_btn">
-                    Login
-                  </Link>
-                )
-              )}
-            </div>
-          </>
-        )}
+          ) : (
+            <Link to="/login" className="btn" id="login_btn">
+              <i className="addPadding fa-regular fa-user"></i>
+            </Link>
+          )}
+
+          <i
+            ref={searchIconRef}
+            className="addPadding fa-solid fa-magnifying-glass me-5"
+            onClick={(e) => {
+              console.log("clicked search");
+              e.stopPropagation();
+              setShowSearch(true);
+            }}
+          ></i>
+        </div>
       </nav>
+
+      {showSearch && (
+        <div
+          ref={searchContainerRef}
+          className="search-container container-fluid m-0 p-0"
+        >
+          <div className="row">
+            <div className="col-12">
+              <form className="search my-2" action="" method="get">
+                <div className="input-group">
+                  <button id="search_btn" className="btn" type="submit">
+                    <i className="fa fa-search" aria-hidden="true"></i>
+                  </button>
+                  <input
+                    type="text"
+                    id="search_field"
+                    aria-describedby="search_btn"
+                    className="form-control"
+                    placeholder="Enter Product Name ..."
+                    name="keyword"
+                  />
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }
+
+

@@ -56,7 +56,7 @@ export default function UploadImages() {
       reader.onload = () => {
         if (reader.readyState === 2) {
           setImagesPreview((oldArray) => [...oldArray, reader.result]);
-          setImages((oldArray) => [...oldArray, file]);
+          setImages((oldArray) => [...oldArray, reader.result]);
         }
       };
 

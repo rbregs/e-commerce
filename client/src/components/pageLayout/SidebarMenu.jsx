@@ -15,31 +15,26 @@ export default function SidebarMenu({ menuItems }) {
   // }, [activeMenuItem]);
 
   return (
-    <div className="list-group mt-3 pl-4">
-      {menuItems?.map((menuItem, index) => (
-        <Link
-          key={index}
-          to={menuItem.url}
-          className="fw-bold list-group-item list-group-item-action"
+    <div className="sidemenu list-group mt-3 pl-4">
+    {menuItems?.map((menuItem, index) => (
+      <Link
+        key={index}
+        to={menuItem.url}
+        className={`fw-bold my-3 p-1 text-decoration-none ${
+          activeMenuItem.includes(menuItem.url) ? "active-link" : ""
+        }`}
+        onClick={() => handleMenuItemClick(menuItem.url)}
+        aria-current={activeMenuItem.includes(menuItem.url) ? "true" : "false"}
+      >
+        <i
+          className={`${menuItem.icon} fa-fw pe-2`}
           style={
-            activeMenuItem.includes(menuItem.url)
-              ? { backgroundColor: "#FFC2D1 ", color: " " }
-              : {}
+            activeMenuItem.includes(menuItem.url) ? { color: "#FB6F92" } : {}
           }
-          onClick={() => handleMenuItemClick(menuItem.url)}
-          aria-current={
-            activeMenuItem.includes(menuItem.url) ? "true" : "false"
-          }
-        >
-          <i
-            className={`${menuItem.icon} fa-fw pe-2`}
-            style={
-              activeMenuItem.includes(menuItem.url) ? { color: "#FB6F92" } : {}
-            }
-          ></i>{" "}
-          {menuItem.name}
-        </Link>
-      ))}
-    </div>
+        ></i>{" "}
+        {menuItem.name}
+      </Link>
+    ))}
+  </div>
   );
 }

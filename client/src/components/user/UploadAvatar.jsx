@@ -7,20 +7,15 @@ import { useSelector } from "react-redux";
 import MetaData from "../pageLayout/MetaData";
 
 export default function UploadAvatar() {
-  // Redux selector
   const { user } = useSelector((state) => state.auth);
-
-  //  avatar and its preview
   const [avatar, setAvatar] = useState("");
   const [avatarPreview, setAvatarPreview] = useState(
     user?.avatar ? user?.avatar?.url : "../public/images/avatar.png"
   );
 
-  //  file upload mutation
   const [upload, { isLoading, error, isSuccess }] = useUploadAvatarMutation();
   const navigate = useNavigate();
 
-  // handle success and error
   useEffect(() => {
     if (error) {
       toast.error(error?.data.message);
@@ -32,10 +27,8 @@ export default function UploadAvatar() {
     }
   }, [error, isSuccess, navigate]);
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (!avatar) {
       toast.error("Please select an avatar.");
       return;
@@ -55,67 +48,74 @@ export default function UploadAvatar() {
       console.error("Upload Error:", err);
     }
   };
-  // Handle file input change
+
   const onChange = (e) => {
-    const reader = new FileReader();
+    const file = e.target.files[0];
+    console.log("Selected file:", file); // Check selected file
+    if (file) {
+      const reader = new FileReader();
 
-    reader.onload = () => {
-      if (reader.readyState === 2) {
-        setAvatarPreview(reader.result);
-        setAvatar(reader.result);
-      }
-    };
+      reader.onload = () => {
+        setAvatarPreview(reader.result); // Update avatar preview
+        setAvatar(file); // Store file for upload
+      };
 
-    reader.readAsDataURL(e.target.files[0]);
+      reader.readAsDataURL(file); // Read the file as a data URL
+    }
   };
 
   return (
     <>
       <MetaData title={"Update Avatar"} />
       <UserLayout>
-        <div className="uploadA-wrapper">
-          <div className="uploadA-container">
-            <form
-              action="#"
-              method="post"
-              encType="multipart/form-data"
-              onSubmit={handleSubmit}
-            >
-              <h2 className="uploadA-title">Upload Avatar</h2>
+        <div className="col-10 col-lg-8">
+          <form
+            className="border"
+            action="#"
+            method="post"
+            encType="multipart/form-data"
+            onSubmit={handleSubmit}
+          >
+            <h2 className="mb-4">Upload Avatar</h2>
 
-              <div className="uploadA-details">
-                <div className="uploadA-detailsContainer">
-                  <div className="uploadA-imageContainer">
-                    <figure className="uploadA-figure">
-                      <img src={avatarPreview} alt="Avatar Preview" />
-                    </figure>
-                  </div>
-                  <div className="input-foam">
-                    <label className="form-label" htmlFor="customFile">
-                      Choose Avatar
-                    </label>
-                    <input
-                      type="file"
-                      name="avatar"
-                      className="form-control"
-                      id="customFile"
-                      accept="image/*"
-                      onChange={onChange}
+            <div className="mb-3">
+              <div className="d-flex align-items-center">
+                <div className="me-3">
+                  <figure className="avatar item-rtl">
+                    {/* Ensure avatarPreview is correctly updated */}
+                    <img
+                      src={avatarPreview}
+                      className="rounded-circle"
+                      alt="avatar preview"
+                      style={{ width: "100px", height: "100px" , objectFit: "cover"}} 
                     />
-                  </div>
+                  </figure>
+                </div>
+                <div className="input-foam">
+                  <label className="form-label" htmlFor="customFile">
+                    Choose Avatar
+                  </label>
+                  <input
+                    type="file"
+                    name="avatar"
+                    className="form-control"
+                    id="customFile"
+                    accept="image/*"
+                    onChange={onChange} 
+                  />
                 </div>
               </div>
+            </div>
 
-              <button
-                id="register_button"
-                type="submit"
-                disabled={isLoading}
-                className="uploadA-btn"
-              >
-                {isLoading ? "Uploading.." : "Upload"}
-              </button>
-            </form>
-          </div>
+            <button
+              id="register_button"
+              type="submit"
+              className="btn w-100 py-2 updateProfile-btn"
+              disabled={isLoading}
+            >
+              {isLoading ? "Uploading..." : "Upload"}
+            </button>
+          </form>
         </div>
       </UserLayout>
     </>
