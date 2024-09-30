@@ -24,29 +24,27 @@ export default function AdminLayout({ children }) {
       icon: "fas fa-receipt",
     },
     {
-        name: "Users",
-        url: "/admin/users",
-        icon: "fas fa-user",
-      },
+      name: "Users",
+      url: "/admin/users",
+      icon: "fas fa-user",
+    },
 
-      {
-        name: "Reviews",
-        url: "/admin/reviews",
-        icon: "fas fa-star",
-      },
+    {
+      name: "Reviews",
+      url: "/admin/reviews",
+      icon: "fas fa-star",
+    },
   ];
 
   return (
-    <div className="userLayout-container">
-      <div className="userLayout-header">
-        <h2 className="userLayout-title">Admin Dashboard</h2>
-      </div>
-      <div className="userLayout-userDashboard">
-        <div className="userLayout-sidebar">
+    <div className="">
+      <h2 className="d-flex justify-content-center">Admin Dashboard</h2>
+      <div className="row px-5">
+        <div className="col-md-3">
           <SidebarMenu menuItems={menuItems} />
         </div>
-        <div className="userLayout-cmainontent">{children}</div>
+        <div className="col-md-7">{children}</div>
       </div>
-   </div>
+    </div>
   );
 }

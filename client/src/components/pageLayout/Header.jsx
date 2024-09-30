@@ -71,18 +71,18 @@ export default function Header() {
           id="navbarNav"
         >
           <div className="navbar-nav">
-            {/* <a className="nav-link ms-2" href="#home">
+            <Link to="/" className="nav-link ms-2" >
               Home
-            </a> */}
-            <a className="nav-link ms-2" href="#about">
+            </Link>
+            <Link  to="/about" className="nav-link ms-2">
               About
-            </a>
-            <a className="nav-link ms-2" href="#shop">
+            </Link>
+            <Link  to="/products" className="nav-link ms-2">
               Products
-            </a>
-            <a className="nav-link ms-2" href="#blog">
+            </Link>
+            <Link to="/blogs" className="nav-link ms-2" >
               Blog
-            </a>
+            </Link>
           </div>
         </div>
 

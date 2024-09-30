@@ -19,6 +19,9 @@ import { MyOrders } from "../order/MyOrders.jsx";
 import { OrderDetails } from "../order/orderDetails.jsx";
 import Invoice from "../invoice/Invoice.jsx";
 import Home from "../Home/Home.jsx";
+import Blog from "../blog/Blog.jsx";
+import AllProducts from "../product/AllProducts.jsx";
+
 
 export default function UserRoutes() {
   return (
@@ -117,6 +120,9 @@ export default function UserRoutes() {
           </ProtectedRoute>
         }
       />
+      <Route path="/blogs" element={<Blog />} />
+
+      <Route path="/products" element={<AllProducts />} />
     </>
   );
 }

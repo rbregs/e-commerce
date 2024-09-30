@@ -100,10 +100,10 @@ export const MyOrders = () => {
     <>
     <MetaData title = {"My Orders"} />
       <div>
-        <h1 className="my-5">{data?.orders?.length} Orders</h1>
+        <h1 className="my-5 ms-3">{data?.orders?.length} Orders</h1>
         <MDBDataTable
           data={setOrders()}
-          className="px-3"
+          className="px-md-3 "
           bordered
           striped
           hover

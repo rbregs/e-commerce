@@ -9,7 +9,8 @@ import MetaData from "../pageLayout/MetaData";
 
 export default function NewProduct() {
   const navigate = useNavigate();
-  const [createProduct, { isLoading, error, isSuccess }] = useCreateProductMutation();
+  const [createProduct, { isLoading, error, isSuccess }] =
+    useCreateProductMutation();
 
   useEffect(() => {
     if (error) {
@@ -48,13 +49,14 @@ export default function NewProduct() {
     <>
       <MetaData title={"Create New Product"} />
       <AdminLayout>
-        <div className="CNP-wrapper">
-          <div className="CNP-container">
-            <form className="shadow rounded bg-body" onSubmit={submitHandler}>
+        <div className="row wrapper">
+          <div className="col-10 col-lg-10 mt-5 mt-lg-0">
+            <form className="shadow rounded bg-body p-5">
               <h2 className="mb-4">New Product</h2>
               <div className="mb-3">
                 <label htmlFor="name_field" className="form-label">
-                  Name
+                  {" "}
+                  Name{" "}
                 </label>
                 <input
                   type="text"
@@ -83,28 +85,28 @@ export default function NewProduct() {
               <div className="row">
                 <div className="mb-3 col">
                   <label htmlFor="price_field" className="form-label">
-                    Price
+                    {" "}
+                    Price{" "}
                   </label>
                   <input
                     type="text"
                     id="price_field"
                     className="form-control"
                     name="price"
-                    value={price}
-                    onChange={onChange}
                   />
                 </div>
 
                 <div className="mb-3 col">
                   <label htmlFor="stock_field" className="form-label">
-                    Stock
+                    {" "}
+                    Stock{" "}
                   </label>
                   <input
                     type="number"
                     id="stock_field"
                     className="form-control"
                     name="stock"
-                    value={stock}
+                    value={price}
                     onChange={onChange}
                   />
                 </div>
@@ -112,10 +114,11 @@ export default function NewProduct() {
               <div className="row">
                 <div className="mb-3 col">
                   <label htmlFor="category_field" className="form-label">
-                    Category
+                    {" "}
+                    Category{" "}
                   </label>
                   <select
-                    className="CNP-form-select"
+                    className="form-select"
                     id="category_field"
                     name="category"
                     value={category}
@@ -130,7 +133,8 @@ export default function NewProduct() {
                 </div>
                 <div className="mb-3 col">
                   <label htmlFor="seller_field" className="form-label">
-                    Seller Name
+                    {" "}
+                    Seller Name{" "}
                   </label>
                   <input
                     type="text"
@@ -142,7 +146,12 @@ export default function NewProduct() {
                   />
                 </div>
               </div>
-              <button type="submit" className="CNP-btn" disabled={isLoading}>
+              <button
+                type="submit"
+                className="createNewProduct btn w-100 py-2
+"
+                disabled={isLoading}
+              >
                 {isLoading ? "Creating new product.." : "Create"}
               </button>
             </form>

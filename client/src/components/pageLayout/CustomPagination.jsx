@@ -33,7 +33,7 @@ export default function CustomPagination({
   }, [page]);
 
   return (
-    <div className="page-item-container">
+    <div className="pagination d-flex justify-content-center mt-5">
       {filteredProductsCount > resPerPage && (
         <Pagination
           activePage={currentPage}

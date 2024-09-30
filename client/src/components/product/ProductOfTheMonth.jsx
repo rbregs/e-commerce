@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useGetProductsQuery } from "../../redux/api/productsApi";
 import { useParams } from "react-router-dom";
 import StarRatings from "react-star-ratings";
+import { Link } from 'react-router-dom'
 
 export default function ProductofTheMonth() {
   const params = useParams();
@@ -24,6 +25,8 @@ export default function ProductofTheMonth() {
         : "/images/default_product.png"
     );
   }, [randomProduct]);
+
+  console.log(data)
 
   function pickRandomProduct(products) {
     const randomIndex = Math.floor(Math.random() * products.length);
@@ -81,9 +84,9 @@ export default function ProductofTheMonth() {
                 </div>
               </div>
               <hr />
-              <div>
+              <div className="">
                 <button className="addtoCart w-100 p-2">ADD TO CART</button>
-                <button className="viewDetails w-100 p-2 mt-3">VIEW DETAILS</button>
+                <button className="viewDetails w-100 p-2 mt-3"><Link to={`/product/${randomProduct?._id}`}>VIEW DETAILS</Link></button>
               </div>
             </div>
           </div>

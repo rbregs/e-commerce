@@ -155,11 +155,17 @@ body {
   border: none;
   color: white;
   transition: 0.3s ease-in-out;
+  
 }
 
 .addtoCart:hover, .viewDetails:hover{
   background-color: var(--color-hover);
   color: var(--color-text);
+}
+
+.viewDetails a {
+  text-decoration: none;
+  color: inherit;
 }
 
 .card {
@@ -181,4 +187,26 @@ body {
 .updateProfile-btn:hover{
   background-color: var(--color-hover);
 }
+#view_btn {
+  background-color: var(--color-accent);
+  color: white;
+}
+#view_btn:hover{
+  background-color: var(--color-hover);
+  color: var(--color-text);
+}
 
+
+.createNewProduct{
+  background-color: var(--color-accent);
+  color: white;
+}
+
+.createNewProduct:hover{
+  background-color: var(--color-hover);
+  color: var(--color-text);
+}
+
+.ratings{
+  margin-top: rem;
+}
