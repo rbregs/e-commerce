@@ -2,6 +2,7 @@ import express from 'express'
 import dotenv from 'dotenv'
 import cookieParser from 'cookie-parser'
 import bodyParser from 'body-parser';
+import path from 'path'
 
 
 import { connectDatabase } from './config/dbConnect.js'
@@ -10,6 +11,11 @@ import productRoutes from './routes/products.js'
 import auth from './routes/auth.js'
 import orderRoutes from './routes/order.js'
 import payment from './routes/payment.js'
+import { fileURLToPath } from 'url';
+
+// const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
 
 //handle uncaught exception
 process.on('uncaughtException', (err) => {
@@ -19,9 +25,14 @@ process.on('uncaughtException', (err) => {
 })
 
 
+
 dotenv.config({ path: './config/config.env' })
+
+
 const app = express()
 const port = process.env.PORT
+
+
 
 app.use(express.json({
     limit: "10mb",
@@ -31,12 +42,11 @@ app.use(express.json({
 }))
 app.use(cookieParser())
 
+
 //connecting database
 connectDatabase();
-console.log('Stripe Secret:', process.env.STRIPE_WEBHOOK_SECRET);
 
 //all routes 
-
 
 //this will be /api/v1/products
 app.use("/api/v1", productRoutes)
@@ -44,8 +54,16 @@ app.use("/api/v1", auth)
 app.use("/api/v1", orderRoutes)
 app.use("/api/v1", payment)
 
+console.log('Current NODE_ENV outside the if statement:', process.env.NODE_ENV);
+if(process.env.NODE_ENV === "PRODUCTION") { 
 
-
+    app.use(express.static(path.join(__dirname, "../frontend/dist")))
+    console.log('Current NODE_ENV under if statement:', process.env.NODE_ENV);
+    console.log("working")
+    app.get('*',(req,res) =>{
+        res.sendFile(path.resolve(__dirname, "../frontend/dist/index.html"))
+    })
+}
 
 app.use(errorMiddleware)
 
