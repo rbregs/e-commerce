@@ -40,16 +40,16 @@ export default function Shipping() {
     <>
       <MetaData title={"Shipping"} />
       <CheckOutSteps Shipping />
-      <div className="shipping-wrapper">
-        <div className="shipping-details">
+      <div className="row wrapper d-flex justify-content-center mt-1 ">
+        <div className="col-10 col-lg-5">
           <form
-            className="shadow rounded bg-body"
+            className="shadow rounded "
             action="your_submit_url_here"
             method="post"
             onSubmit={formDataSubmit}
           >
-            <h2 className="mb-4">Shipping Info</h2>
-            <div className="mb-3">
+            <h2 className="mb-4 p-2 text-center">Shipping Info</h2>
+            <div className="mb-3 ms-5 me-5">
               <label htmlFor="address_field" className="form-label">
                 Address
               </label>
@@ -64,7 +64,7 @@ export default function Shipping() {
               />
             </div>
 
-            <div className="mb-3">
+            <div className="mb-3 ms-5 me-5">
               <label htmlFor="city_field" className="form-label">
                 City
               </label>
@@ -79,7 +79,7 @@ export default function Shipping() {
               />
             </div>
 
-            <div className="mb-3">
+            <div className="mb-3 ms-5 me-5">
               <label htmlFor="phone_field" className="form-label">
                 Phone No
               </label>
@@ -94,7 +94,7 @@ export default function Shipping() {
               />
             </div>
 
-            <div className="mb-3">
+            <div className="mb-3 ms-5 me-5">
               <label htmlFor="postal_code_field" className="form-label">
                 Zip Code
               </label>
@@ -109,7 +109,7 @@ export default function Shipping() {
               />
             </div>
 
-            <div className="mb-3">
+            <div className="mb-3 ms-5 me-5">
               <label htmlFor="zip_code_field" className="form-label">
                 Country
               </label>
@@ -127,11 +127,18 @@ export default function Shipping() {
                   </option>
                 ))}
               </select>
+
+              <button id="shipping_btn"
+                  type="submit"
+                   className="btn w-100 py-2 mt-3 mb-3 updateProfile-btn"
+
+                >
+                     CONTINUE
+                  
+                </button>
             </div>
 
-            <button id="shipping_btn" type="submit" className="btn">
-              CONTINUE
-            </button>
+            
           </form>
         </div>
       </div>

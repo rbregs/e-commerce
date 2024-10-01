@@ -29,8 +29,8 @@ export default function ConfirmOrder() {
     <>
       <MetaData title={"Confirm Order"} />
       <CheckOutSteps shipping confirmOrder />
-      <div className="row d-flex justify-content-between">
-        <div className="col-12 col-lg-8 mt-5 order-confirm">
+      <div className="row d-flex justify-content-between ms-5 me-5">
+        <div className="col-12 col-lg-8 mt-5 order-confirm ">
           <h4 className="mb-3">Shipping Info</h4>
           <p>
             <b>Name:</b> {user?.name}
@@ -100,7 +100,7 @@ export default function ConfirmOrder() {
             <Link
               to="/payment_method"
               id="checkout_btn"
-              className="btn btn-primary w-100"
+              className="btn w-100 updateProfile-btn"
               onClick={proceedToPaymentHandler}
             >
               Proceed to Payment

@@ -1,56 +1,24 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLoginMutation } from "../../redux/api/autApi";
 import { Loader } from "../pageLayout/Loader";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import ForgetPassword from "../user/ForgetPassword";
 import MetaData from "../pageLayout/MetaData";
 
 export default function Login() {
-  //inputField
-  const passwordInputRef = useRef(null);
-  const forgetPassRef = useRef(null);
-
-  useEffect(() => {
-    const passwordInput = passwordInputRef.current;
-    const forgetPassLink = forgetPassRef.current;
-
-    const handleFocus = () => {
-      forgetPassLink.style.opacity = "0";
-      forgetPassLink.style.visibility = "hidden";
-    };
-
-    const handleBlur = () => {
-      forgetPassLink.style.opacity = "1";
-      forgetPassLink.style.visibility = "visible";
-    };
-
-    passwordInput.addEventListener("focus", handleFocus);
-    passwordInput.addEventListener("blur", handleBlur);
-
-    return () => {
-      passwordInput.removeEventListener("focus", handleFocus);
-      passwordInput.removeEventListener("blur", handleBlur);
-    };
-  }, []);
-
-  //getting credentials
+  // State for credentials
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  
+  // Redux state and navigate
   const { isAuthenticated } = useSelector((state) => state.auth);
   const navigate = useNavigate();
 
-  const userNameChange = (e) => {
-    setEmail(e.target.value);
-  };
+  // Login mutation
+  const [login, { isLoading, error }] = useLoginMutation();
 
-  const passwordChange = (e) => {
-    setPassword(e.target.value);
-  };
-
-  const [login, { isLoading, error, data }] = useLoginMutation();
-
+  // Redirect if authenticated
   useEffect(() => {
     if (isAuthenticated) {
       navigate("/");
@@ -61,6 +29,7 @@ export default function Login() {
     }
   }, [error, isAuthenticated]);
 
+  // Handle form submission
   const submitDetails = (e) => {
     e.preventDefault();
     const loginData = {
@@ -73,39 +42,50 @@ export default function Login() {
   return (
     <>
       <MetaData title={"Login"} />
-        <form method="post" className="loginForm" onSubmit={submitDetails}>
-          <h5>Login</h5>
-          <div className="loginFields">
-            <div className="userInput">
-              <input
-                type="text"
-                className="username"
-                placeholder="Email"
-                value={email}
-                onChange={userNameChange}
-              />
+      <div className="row justify-content-center">
+        <div className="col-md-6 col-lg-4">
+          <div className="card shadow-sm mt-5">
+            <div className="card-body">
+              <h3 className="card-title text-center mb-4">Login</h3>
+              <form onSubmit={submitDetails}>
+                <div className="mb-3">
+                  <label htmlFor="username" className="form-label">Username</label>
+                  <input 
+                    type="text" 
+                    className="form-control" 
+                    id="username" 
+                    placeholder="Enter your username"
+                    value={email} 
+                    onChange={(e) => setEmail(e.target.value)} 
+                    required
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="password" className="form-label">Password</label>
+                  <input 
+                    type="password" 
+                    className="form-control" 
+                    id="password" 
+                    placeholder="Enter your password"
+                    value={password} 
+                    onChange={(e) => setPassword(e.target.value)} 
+                    required
+                  />
+                </div>
+                <div className="d-grid">
+                  <button type="submit" className="btn btn-block" disabled={isLoading}>
+                    {isLoading ? <Loader /> : "Login"}
+                  </button>
+                </div>
+                <div className="d-grid text-center mt-2">
+                  <h6>don't have an account? <Link to="/register">Register</Link></h6>
+                  <h6><Link to="/password/forgot">Forgot Password?</Link></h6> {/* Added Forgot Password link */}
+                </div>
+              </form>
             </div>
-            <div className="passwordWrapper">
-              <input
-                type="password"
-                className="username"
-                placeholder="Password"
-                ref={passwordInputRef}
-                value={password}
-                onChange={passwordChange}
-              />
-              <p className="forgetPass" ref={forgetPassRef}>
-                <Link to="/password/forgot">Forgot Password?</Link>
-              </p>
-            </div>
-            <button type="submit" disabled={isLoading}>
-              {isLoading ? "Authenticating.. please wait" : "Login"}
-            </button>
-            <p className="registerLink">
-              Don't have an account? <Link to="/register">Register</Link>
-            </p>
           </div>
-        </form>
+        </div>
+      </div>
     </>
   );
 }

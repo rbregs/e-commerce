@@ -21,6 +21,7 @@ import Invoice from "../invoice/Invoice.jsx";
 import Home from "../Home/Home.jsx";
 import Blog from "../blog/Blog.jsx";
 import AllProducts from "../product/AllProducts.jsx";
+import About from "../about/About.jsx";
 
 
 export default function UserRoutes() {
@@ -121,6 +122,8 @@ export default function UserRoutes() {
         }
       />
       <Route path="/blogs" element={<Blog />} />
+
+      <Route path="/about" element={<About />} />
 
       <Route path="/products" element={<AllProducts />} />
     </>

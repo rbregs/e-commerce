@@ -7,6 +7,11 @@
   font-family: 'Montserrat', sans-serif;
 }
 
+* a {
+  text-decoration: none;
+  color: var(--color-accent);
+}
+
 html {
   height: 100%;
 }
@@ -49,6 +54,10 @@ body {
 }
 
 /* ----------------------------------- */
+
+.cardHome {
+  background-color: var(--color-accent);
+}
 .viewAll {
   background-color: var(--color-primary);
 }
@@ -113,11 +122,13 @@ body {
 }
 
 .d-grid .btn {
-  background-color: var(--color-primary);
+  background-color: var(--color-accent);
+  color: white;
 }
 
 .d-grid .btn:hover {
   background-color: var(--color-hover);
+  color: var(--color-text);
 }
 
 .sidemenu a {
@@ -317,4 +328,93 @@ body {
 
 .newProduct{
   background-color: var(--color-bg);
+}
+
+.checkout-progress div {
+  box-sizing: border-box;
+}
+
+.checkout-progress {
+  display: block;
+  clear: both;
+  margin: 20px auto;
+  width: auto;
+  font-family: sans-serif;
+  overflow: auto;
+  margin-left: 5rem;
+}
+
+.step {
+  margin: 0;
+  border: 0;
+  letter-spacing: 1px;
+  line-height: 30px;
+  padding: 5px 10px 5px 15px;
+  color: grey;
+  text-decoration: none;
+  cursor: default;
+  font-weight: bold;
+  float: left;
+  height: auto;
+}
+
+.incomplete {
+  background: #eeeeee;
+}
+
+.active-step {
+  background: var(--color-accent);
+  color: #fff;
+}
+
+.triangle-active {
+  float: left;
+  width: 0;
+  border-top: 20px solid transparent;
+  border-left: 15px solid var(--color-accent);
+  border-bottom: 20px solid transparent;
+  margin-left: -1px;
+}
+
+.triangle2-active {
+  width: 0;
+  float: left;
+  border-top: 20px solid var(--color-accent);
+  border-left: 15px solid var(--color-bg);
+  border-bottom: 20px solid var(--color-accent);
+  margin-right: -1px;
+}
+
+.triangle-incomplete {
+  float: left;
+  width: 0;
+  border-top: 20px solid transparent;
+  border-left: 15px solid #eeeeee;
+  border-bottom: 20px solid transparent;
+  margin-left: -1px;
+}
+
+.triangle2-incomplete {
+  width: 0;
+  float: left;
+  border-top: 20px solid #eeeeee;
+  border-left: 15px solid var(--color-bg);
+  border-bottom: 20px solid #eeeeee;
+  margin-right: -1px;
+}
+
+
+.greenColor {
+  color: rgb(5, 70, 5) !important;
+  font-weight: bold;
+}
+
+.redColor {
+  color: red !important;
+  font-weight: bold;
+}
+
+.smallCard{
+  width: 18rem;
+  height: 22rem;
 }

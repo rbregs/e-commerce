@@ -65,7 +65,7 @@ export default function ProductofTheMonth() {
       <div className="text-center">
         <h1>FEATURED PRODUCT</h1>
         <div className="row my-5">
-          <div className="col-lg-6 col-md-12 border mb-4">
+          <div className="col-lg-6 col-md-12 mb-4">
             <img
               src={activeImg}
               alt="Product"
@@ -89,7 +89,7 @@ export default function ProductofTheMonth() {
               ))}
             </div>
           </div>
-          <div className="col-lg-6 col-md-12 border">
+          <div className="col-lg-6 col-md-12 ">
             <div className="d-flex flex-column text-start">
               <p className="WOTM-title">{randomProduct?.name}</p>
               <p className="WOTM-description mt-5">{randomProduct?.description}</p>

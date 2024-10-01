@@ -3,88 +3,88 @@ import MetaData from "../pageLayout/MetaData";
 import CheckOutSteps from "./CheckOutSteps";
 import { useSelector } from "react-redux";
 import { calculateOrderCost } from "../../helpers/helpers";
-import { useCreatNewOrderMutation, useStripeCheckoutSessionMutation } from "../../redux/api/orderApi";
+import {
+  useCreatNewOrderMutation,
+  useStripeCheckoutSessionMutation,
+} from "../../redux/api/orderApi";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 export default function PaymentMethod() {
-  const navigate = useNavigate()
-  const [method, setMethod] = useState("")
+  const navigate = useNavigate();
+  const [method, setMethod] = useState("");
   const { shippingInfo, cartItems } = useSelector((state) => state.cart);
 
-  const[stripeCheckoutSession, { data:checkoutData, error:CheckoutError, isLoading } ]  = useStripeCheckoutSessionMutation()
+  const [
+    stripeCheckoutSession,
+    { data: checkoutData, error: CheckoutError, isLoading },
+  ] = useStripeCheckoutSessionMutation();
 
-  useEffect(()=> {
-
+  useEffect(() => {
     if (checkoutData) {
-     window.location.href =(checkoutData?.url);
+      window.location.href = checkoutData?.url;
     }
 
-    if(CheckoutError) {
-      toast.error(CheckoutError?.data?.message)
+    if (CheckoutError) {
+      toast.error(CheckoutError?.data?.message);
+    }
+  }, [checkoutData, CheckoutError]);
+
+  const [creatNewOrder, { error, isSuccess }] = useCreatNewOrderMutation();
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error?.data?.message);
     }
 
-  },[checkoutData, CheckoutError])
-
-  const [creatNewOrder, {error, isSuccess }] =
-    useCreatNewOrderMutation();
-
-    useEffect (() => {
-        if(error) {
-            toast.error(error?.data?.message)
-        }
-
-        if (isSuccess){
-            navigate("/me/orders?order_success=true")
-        }
-    },[error, isSuccess])
+    if (isSuccess) {
+      navigate("/me/orders?order_success=true");
+    }
+  }, [error, isSuccess]);
 
   const submitHandler = (e) => {
-                                  e.preventDefault();
-                                  console.log("Cart Items:", cartItems);
-                                  const { itemsPrice, shippingPrice, taxPrice, totalPrice } =
-                                  calculateOrderCost(cartItems);
-                              
-                                  if (method == "COD") {
-                                      const orderData = {
-                                          orderItems: cartItems,
-                                          shippingInfo,
-                                          itemPrice:itemsPrice,
-                                          shippingAmount: shippingPrice,
-                                          taxAmount: taxPrice,
-                                          totalAmount: totalPrice,
-                                          paymentInfo: {
-                                          status: "Not Paid",
-                                          },
-                                          paymentMethod: "COD",
-                                      
-                                      };
-                                      creatNewOrder(orderData);
-                                  }
-                                  if (method === "Card") {
-                                    const orderData = {
-                                      orderItems: cartItems,
-                                      shippingInfo,
-                                      itemPrice :itemsPrice ,
-                                      shippingAmount: shippingPrice,
-                                      taxAmount: taxPrice,
-                                      totalAmount: totalPrice,
-                                    }; 
+    e.preventDefault();
+    console.log("Cart Items:", cartItems);
+    const { itemsPrice, shippingPrice, taxPrice, totalPrice } =
+      calculateOrderCost(cartItems);
 
-                                    stripeCheckoutSession(orderData)
-                                  }
-                              };
-            
+    if (method == "COD") {
+      const orderData = {
+        orderItems: cartItems,
+        shippingInfo,
+        itemPrice: itemsPrice,
+        shippingAmount: shippingPrice,
+        taxAmount: taxPrice,
+        totalAmount: totalPrice,
+        paymentInfo: {
+          status: "Not Paid",
+        },
+        paymentMethod: "COD",
+      };
+      creatNewOrder(orderData);
+    }
+    if (method === "Card") {
+      const orderData = {
+        orderItems: cartItems,
+        shippingInfo,
+        itemPrice: itemsPrice,
+        shippingAmount: shippingPrice,
+        taxAmount: taxPrice,
+        totalAmount: totalPrice,
+      };
 
+      stripeCheckoutSession(orderData);
+    }
+  };
 
   return (
     <>
       <MetaData title={"Payment Method"} />
       <CheckOutSteps Shipping confirmOrder payment />
-      <div className="row wrapper">
+      <div className="row wrapper d-flex justify-content-center mt-5">
         <div className="col-10 col-lg-5">
           <form
-            className="shadow rounded bg-body"
+            className="formSelectPM shadow rounded  p-3"
             action="your_submit_url_here"
             method="post"
             onSubmit={submitHandler}
@@ -118,7 +118,11 @@ export default function PaymentMethod() {
               </label>
             </div>
 
-            <button id="shipping_btn" type="submit" className="btn py-2 w-100" disabled={isLoading}>
+            <button
+              id="shipping_btn"
+              type="submit"
+              className="btn w-100 py-2 mt-3 mb-3 updateProfile-btn"
+            >
               CONTINUE
             </button>
           </form>

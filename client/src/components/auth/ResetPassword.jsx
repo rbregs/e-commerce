@@ -13,9 +13,7 @@ export default function ResetPassword() {
   const navigate = useNavigate();
 
   const { isAuthenticated } = useSelector((state) => state.auth);
-  const [resetPassword, { isLoading,
-                          error, 
-                          isSuccess }] =useResetPasswordMutation();
+  const [resetPassword, { isLoading, error, isSuccess }] = useResetPasswordMutation();
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -28,52 +26,69 @@ export default function ResetPassword() {
 
     if (isSuccess) {
       toast.success("Password reset successfully");
-      navigate(0);
+      navigate("/login"); 
     }
   }, [error, isSuccess, isAuthenticated]);
 
   const submitDetails = (e) => {
-                                  e.preventDefault();
-                                  if (password !== confirmPassword) {
-                                    toast.error("Passwords do not match");
-                                    return;
-                                  }
+    e.preventDefault();
+    if (password !== confirmPassword) {
+      toast.error("Passwords do not match");
+      return;
+    }
 
-                                  const data = { password, confirmPassword };
-                                  resetPassword({ token: params?.token, body: data });
-                                };
+    const data = { password, confirmPassword };
+    resetPassword({ token: params?.token, body: data });
+  };
 
   return (
     <>
-      <MetaData title={"Reset Password"}/>
-        <form method="post" className="loginForm" onSubmit={submitDetails}>
-          <h5>Reset Password</h5>
-          <div className="loginFields">
-            <div className="userInput">
-              <input
-                type="password"
-                className="username"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
+      <MetaData title={"Reset Password"} />
+      <div className="row justify-content-center">
+        <div className="col-md-6 col-lg-4">
+          <div className="card shadow-sm mt-5">
+            <div className="card-body">
+              <h3 className="card-title text-center mb-4">Reset Password</h3>
+              <form onSubmit={submitDetails}>
+                <div className="mb-3">
+                  <label htmlFor="password" className="form-label">Password</label>
+                  <input
+                    type="password"
+                    className="form-control"
+                    id="password"
+                    placeholder="Enter your new password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="confirmPassword" className="form-label">Confirm Password</label>
+                  <input
+                    type="password"
+                    className="form-control"
+                    id="confirmPassword"
+                    placeholder="Confirm your new password"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    required
+                  />
+                </div>
+                <div className="d-grid">
+                  <button type="submit" className="btn btn-block" disabled={isLoading}>
+                    {isLoading ? "Resetting password... please wait" : "Reset Password"}
+                  </button>
+                </div>
+                <div className="d-grid text-center mt-2">
+                  <p className="registerLink">
+                  Cancel? go to  <Link to="/login">Login</Link> page
+                  </p>
+                </div>
+              </form>
             </div>
-            <div className="passwordWrapper">
-              <input
-                type="password"
-                className="username"
-                placeholder="Confirm Password"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-              />
-            </div>
-            <button type="submit" disabled={isLoading}>
-              {isLoading
-                ? "Resetting password... please wait"
-                : "Reset Password"}
-            </button>
           </div>
-        </form>
+        </div>
+      </div>
     </>
   );
 }

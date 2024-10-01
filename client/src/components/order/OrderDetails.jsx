@@ -18,8 +18,8 @@ export const OrderDetails = () => {
     totalAmount,
     orderStatus,
   } = order;
-  
-  const isPaid = paymentInfo?.status ==="paid" ? true :false
+
+  const isPaid = paymentInfo?.status === "paid" ? true : false;
 
   useEffect(() => {
     if (error) {
@@ -49,7 +49,7 @@ export const OrderDetails = () => {
                 <th scope="row">Status</th>
                 <td
                   className={
-                    String(orderStatus).includes("Delivered")
+                    orderStatus.includes("Delivered")
                       ? "greenColor"
                       : "redColor"
                   }
@@ -57,6 +57,7 @@ export const OrderDetails = () => {
                   {orderStatus}
                 </td>
               </tr>
+
               <tr>
                 <th scope="row">Date</th>
                 <td>
@@ -93,7 +94,7 @@ export const OrderDetails = () => {
               <tr>
                 <th scope="row">Status</th>
                 <td className={isPaid ? "greenColor" : "redColor"}>
-                {paymentInfo?.status}
+                  {paymentInfo?.status}
                 </td>
               </tr>
               <tr>

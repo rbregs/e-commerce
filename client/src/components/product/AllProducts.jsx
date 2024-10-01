@@ -42,17 +42,18 @@ const columSize = keyword ? 4 : 3
   return (
     <>
       <MetaData title={"Buy Best Product Online"} />
-      <div className="row ms-1 me-1">
+      <div className="row ms-1 me-1 border">
         {keyword && (
           <div className="col-6 col-md-3 mt-5"><Filter /></div>
         )}
-        <div className={keyword ? "col-6 col-md-9" : "col-6 col-md-12"}>
+        <div className={keyword ? "col-6 col-md-9 border" : "col-6 col-md-12 m-auto"}>
           <h1 id="products_heading" className="text-secondary">
             {keyword ? `${data?.products?.length} Products Found with keyword: ${keyword}` : "" }
           </h1>
 
           <section id="products" className="mt-5">
             <div className="row">
+              
               {data?.products?.map((product) => (
                 <ProductDisplay product={product} columSize= {columSize} />
               ))}

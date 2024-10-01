@@ -4,20 +4,19 @@ import StarRatings from "react-star-ratings";
 
 export default function ProductItem({ product }) {
   return (
-    <div className="p-1 mx-3">
-      <div className="row justify-content-center border">
-        {/* Card 1 */}
-        <div className="card w-100">
+    <div className=" p-1 mx-3">
+      <div className=" row justify-content-center border">
+        <div className=" card w-100">
           <img
             src={product?.images[0]?.url}
             alt="Product"
-            className="card-img-top" 
+            className=" card-img-top" 
           />
           <div className="card-body">
-            <h5 className="card-title text-truncate">
+            <h5 className=" card-title text-truncate">
               <Link to={`/product/${product?._id}`}>{product?.name}</Link>
             </h5>
-            <p className="card-text py-1">
+            <p className=" card-text py-1">
               <span className="price">{`$${product?.price}`}</span>
             </p>
             <div className="d-flex align-items-center mx-auto">
