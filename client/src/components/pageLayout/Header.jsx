@@ -5,6 +5,7 @@ import Search from "./Search";
 import { useGetMeQuery } from "../../redux/api/userApi";
 import { useSelector } from "react-redux";
 import { useLazyLogoutQuery } from "../../redux/api/autApi";
+import { NavLink } from "react-router-dom";
 
 export default function Header() {
   const { user } = useSelector((state) => state.auth);
@@ -21,7 +22,7 @@ export default function Header() {
   const searchIconRef = useRef(null);
 
   useEffect(() => {
-    if (isSuccess) navigate(0); 
+    if (isSuccess) navigate(0);
   }, [isSuccess, navigate]);
 
   const logoutHandler = () => {
@@ -71,25 +72,69 @@ export default function Header() {
           id="navbarNav"
         >
           <div className="navbar-nav">
-            <Link to="/" className="nav-link ms-2" >
+            <NavLink
+              to="/"
+              className="nav-link ms-2"
+              activeClassName="active"
+              exact
+              style={({ isActive }) => {
+                return {
+                  fontWeight: isActive ? "bold" : "",
+                  color: isActive ? "#EC407A" : "black",
+                };
+              }}
+            >
               Home
-            </Link>
-            <Link  to="/about" className="nav-link ms-2">
+            </NavLink>
+            <NavLink
+              to="/about"
+              className="nav-link ms-2"
+              activeClassName="active"
+              style={({ isActive }) => {
+                return {
+                  fontWeight: isActive ? "bold" : "",
+                  color: isActive ? "#EC407A" : "black",
+                };
+              }}
+            >
               About
-            </Link>
-            <Link  to="/products" className="nav-link ms-2">
+            </NavLink>
+            <NavLink
+              to="/products"
+              className="nav-link ms-2"
+              activeClassName="active"
+              style={({ isActive }) => {
+                return {
+                  fontWeight: isActive ? "bold" : "",
+                  color: isActive ? "#EC407A" : "black",
+                };
+              }}
+            >
               Products
-            </Link>
-            <Link to="/blogs" className="nav-link ms-2" >
+            </NavLink>
+            <NavLink
+              to="/blogs"
+              className="nav-link ms-2"
+              activeClassName="active"
+              style={({ isActive }) => {
+                return {
+                  fontWeight: isActive ? "bold" : "",
+                  color: isActive ? "#EC407A" : "black",
+                };
+              }}
+            >
               Blog
-            </Link>
+            </NavLink>
           </div>
         </div>
 
-        <div className="d-flex align-items-center">
-          <span className="headerCart p-2 m-0">
-            <i className="fa-solid fa-cart-shopping"></i> (0)
+        <div className=" d-flex align-items-center">
+          <span className="shoppingCartSpan p-2 m-0">
+            <Link to ="/cart" className="shoppingCart">
+              <i className="fa-solid fa-cart-shopping"></i> {cartItems?.length}
+            </Link>
           </span>
+
           {user ? (
             <div className="dropdown">
               <button
@@ -101,9 +146,17 @@ export default function Header() {
               >
                 <figure className="avatar avatar-nav me-2 mb-0">
                   <img
-                    src= {user?.avatar ? user?.avatar.url : "../public/images/avatar.png"}
+                    src={
+                      user?.avatar
+                        ? user?.avatar.url
+                        : "../public/images/avatar.png"
+                    }
                     className="rounded-circle"
-                    style={{ width: "40px", height: "40px", objectFit: "cover" }}
+                    style={{
+                      width: "40px",
+                      height: "40px",
+                      objectFit: "cover",
+                    }}
                     // alt="User Avatar"
                   />
                 </figure>
@@ -113,14 +166,14 @@ export default function Header() {
                 className="dropdown-menu"
                 aria-labelledby="dropDownMenuButton"
               >
-                {user?.role ==="admin" && (
+                {user?.role === "admin" && (
                   <li>
-                  <a className="dropdown-item" href="/admin/dashboard">
-                    Dashboard
-                  </a>
-                </li>
+                    <a className="dropdown-item" href="/admin/dashboard">
+                      Dashboard
+                    </a>
+                  </li>
                 )}
-                
+
                 <li>
                   <a className="dropdown-item" href="/me/orders">
                     Orders
@@ -132,9 +185,13 @@ export default function Header() {
                   </a>
                 </li>
                 <li>
-                  <a className="dropdown-item text-danger" href="/">
+                  <Link
+                    to="/"
+                    className="dropdown-item text-danger"
+                    onClick={logoutHandler}
+                  >
                     Logout
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -185,5 +242,3 @@ export default function Header() {
     </>
   );
 }
-
-

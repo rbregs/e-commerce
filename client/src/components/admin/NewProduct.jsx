@@ -49,9 +49,9 @@ export default function NewProduct() {
     <>
       <MetaData title={"Create New Product"} />
       <AdminLayout>
-        <div className="row wrapper">
-          <div className="col-10 col-lg-10 mt-5 mt-lg-0">
-            <form className="shadow rounded bg-body p-5">
+        <div className="row wrapper ">
+          <div className=" col-10 col-lg-10 mt-5 mt-lg-0">
+            <form className=" newProduct shadow rounded  p-5 border">
               <h2 className="mb-4">New Product</h2>
               <div className="mb-3">
                 <label htmlFor="name_field" className="form-label">

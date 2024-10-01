@@ -18,6 +18,10 @@ body {
   padding: 0;
 }
 
+.container-fluid {
+  overflow-x: hidden;
+}
+
 
 
 .navbar {
@@ -181,11 +185,13 @@ body {
   color: var(--color-accent);
 }
 .updateProfile-btn{
-  background-color: var(--color-primary);
+  background-color: var(--color-accent);
+  color: white;
 }
 
 .updateProfile-btn:hover{
   background-color: var(--color-hover);
+  color: black;
 }
 #view_btn {
   background-color: var(--color-accent);
@@ -209,4 +215,106 @@ body {
 
 .ratings{
   margin-top: rem;
+}
+
+.filterBtn{
+  background-color: var(--color-accent);
+  color: white;
+}
+
+.filterBtn:hover{
+  background-color: var(--color-hover);
+  color: var(--color-text);
+}
+/* 
+.app-container {
+  margin-left: 3rem;
+  margin-right: 3rem;
+} */
+
+#product_image {
+  margin-top: 12rem;
+  margin-left: 15rem;
+}
+
+.blueBorder {
+  border: 0.1rem solid var(--color-accent);
+}
+
+.inputPDetails {
+  width: 5rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  text-align: center;
+
+
+}
+
+
+.shoppingCart {
+  background-color: var(--color-bg);
+}
+
+.shoppingCartSpan {
+  color: var(--color-accent); /* This controls the color of the span */
+  padding: 2px;
+  margin: 0;
+}
+
+.shoppingCart {
+  background-color: transparent; 
+  border: none; 
+  color: var(--color-accent); 
+  font-size: 1.2rem; 
+  cursor: pointer; 
+  text-decoration: none;
+}
+
+.shoppingCart i {
+  margin-right: 5px; 
+}
+
+
+.shoppingCart:hover {
+  color: var(--color-hover); 
+}
+
+.DeleteCartItem {
+  padding: 0.25rem;
+  color: red;
+  background-color: transparent;
+  transition: transform 0.3s ease;
+}
+
+.DeleteCartItem:hover {
+  transform:  scale(1.1);
+}
+
+.inputField{
+  border-radius: 0.25rem;
+  border: none;
+  padding: 0.4rem;
+  margin-top: 0.25rem;
+  width: 25%;
+}
+
+.fetchButton {
+  background-color: var(--color-accent);
+  color: white;
+  margin-left: 0.5rem;
+}
+
+.fetchButton:hover{
+  color: var(--color-text);
+  background-color: var(--color-hover);
+  
+}
+
+.updateProductbtn {
+  background-color: var(--color-accent);
+}
+
+
+.newProduct{
+  background-color: var(--color-bg);
 }

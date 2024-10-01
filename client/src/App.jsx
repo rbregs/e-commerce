@@ -17,7 +17,7 @@ function App() {
         <div className="container-fluid d-flex flex-column min-vh-100 ">
           <Toaster position="top-center" />
           <Header />
-          <div className="container">
+          <div className="app-container">
             <Routes>
               {userRoutes}
               {adminRoutes}

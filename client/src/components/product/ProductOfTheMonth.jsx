@@ -1,14 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { useGetProductsQuery } from "../../redux/api/productsApi";
+import { useGetProductDetailsQuery, useGetProductsQuery } from "../../redux/api/productsApi";
 import { useParams } from "react-router-dom";
 import StarRatings from "react-star-ratings";
 import { Link } from 'react-router-dom'
+import { setCartItems } from "../../redux/features/cartSlice";
+import toast from "react-hot-toast";
+import { useDispatch } from "react-redux";
 
 export default function ProductofTheMonth() {
   const params = useParams();
   const [randomProduct, setRandomProduct] = useState(null);
   const { data, isLoading, error } = useGetProductsQuery({});
   const [activeImg, setActiveImg] = useState("");
+  const dispatch = useDispatch();
+
+
 
   useEffect(() => {
     if (!isLoading && data && data.products && data.products.length > 0) {
@@ -33,10 +39,31 @@ export default function ProductofTheMonth() {
     return products[randomIndex];
   }
 
+
+  const setItemToCart = () => {
+    if (!randomProduct) {
+      toast.error("No product selected!");
+      return;
+    }
+  
+    const quantity = 1; 
+  
+    const cartItem = {
+      product: randomProduct._id, 
+      name: randomProduct.name,
+      price: randomProduct.price,
+      image: randomProduct.images[0]?.url,
+      stock: randomProduct.stock,
+      quantity,
+    };
+  
+    dispatch(setCartItems(cartItem));
+    toast.success("Item added to cart");
+  };
   return (
     <div className="container my-5">
       <div className="text-center">
-        <h1>WONDER OF THE MONTH</h1>
+        <h1>FEATURED PRODUCT</h1>
         <div className="row my-5">
           <div className="col-lg-6 col-md-12 border mb-4">
             <img
@@ -85,7 +112,8 @@ export default function ProductofTheMonth() {
               </div>
               <hr />
               <div className="">
-                <button className="addtoCart w-100 p-2">ADD TO CART</button>
+                <button
+                 className="addtoCart w-100 p-2"   onClick={setItemToCart}>ADD TO CART</button>
                 <button className="viewDetails w-100 p-2 mt-3"><Link to={`/product/${randomProduct?._id}`}>VIEW DETAILS</Link></button>
               </div>
             </div>

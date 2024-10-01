@@ -42,7 +42,7 @@ const columSize = keyword ? 4 : 3
   return (
     <>
       <MetaData title={"Buy Best Product Online"} />
-      <div className="row">
+      <div className="row ms-1 me-1">
         {keyword && (
           <div className="col-6 col-md-3 mt-5"><Filter /></div>
         )}

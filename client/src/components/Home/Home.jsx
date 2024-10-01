@@ -11,7 +11,7 @@ import MyCarousel from "../pageLayout/MyCarousel.jsx";
 import ProductofTheMonth from "../product/ProductOfTheMonth.jsx";
 import AnotherSection from "../pageLayout/Section.jsx";
 
-export default function Home({product}) {
+export default function Home({ product }) {
   let [searchParams] = useSearchParams();
 
   const page = searchParams.get("page") || 1;
@@ -38,12 +38,14 @@ export default function Home({product}) {
 
   if (isLoading) return <Loader />;
 
+  const hasSearchResults = data?.products?.length > 0;
+
   return (
     <>
       <MetaData title={"Buy Best Product Online"} />
-      <MyCarousel />
+      {!keyword || !hasSearchResults ? <MyCarousel /> : null}
+
       <div className="row">
-        {/* Display filters if keyword is present */}
         {keyword && (
           <div className="col-md-3">
             <Filter />
@@ -54,14 +56,13 @@ export default function Home({product}) {
           <h1 className="my-4 text-center">
             {keyword
               ? `${data?.products?.length} Product(s) found with keyword "${keyword}"`
-              : "FEATURED PRODUCTS"}
+              : "PRODUCTS"}
           </h1>
 
           <div className="row ">
-            
             {data?.products?.map((product) => (
               <div
-                className="col-lg-3 col-md-4 col-sm-6 col-12 mb-4" 
+                className="col-lg-3 col-md-4 col-sm-6 col-12 mb-4"
                 key={product._id}
               >
                 <ProductItem product={product} />
@@ -70,13 +71,20 @@ export default function Home({product}) {
           </div>
 
           {/* Pagination component */}
-          {/* <CustomPagination
-            resPerPage={data?.resPerPage}
-            filteredProductsCount={data?.filteredProductsCount}
-          /> */}
-          <ProductofTheMonth product ={product}/>
-          <hr/>
-          <AnotherSection />
+          {keyword && hasSearchResults && (
+            <CustomPagination
+              resPerPage={data?.resPerPage}
+              filteredProductsCount={data?.filteredProductsCount}
+            />
+          )}
+
+          {!keyword || !hasSearchResults ? (
+            <ProductofTheMonth product={product} />
+          ) : null}
+
+          <hr />
+
+          {!keyword || !hasSearchResults ? <AnotherSection /> : null}
         </div>
       </div>
     </>

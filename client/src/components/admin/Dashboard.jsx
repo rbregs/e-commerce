@@ -70,7 +70,7 @@ export default function Dashboard() {
                className="form-control"
             />
           </div>
-          <button className="db-btn" onClick={submitHandler}>Fetch</button>
+          <button className="fetchButton btn w-25 mt-3" onClick={submitHandler}>Fetch</button>
         </div>
 
          <div className="row pr-4 my-5">

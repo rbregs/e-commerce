@@ -7,8 +7,8 @@ import { Link, useParams } from 'react-router-dom';
 export default function ProductDisplay({product, columSize}) {
 
   return (
-    <div className={`col-sm-12 col-md-6 col-lg-${columSize} my-3`}>
-    <div className="card p-3 rounded">
+    <div className={`col-sm-12 col-md-6 col-lg-${columSize} my-3 ms-`}>
+    <div className="card rounded">
       <img
         className="card-img-top mx-auto"
         src={product?.images[0]?.url}

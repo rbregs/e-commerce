@@ -65,9 +65,9 @@ export default function UpdateProduct() {
     <>
       <MetaData title={"Update Product"} />
       <AdminLayout>
-        <div className="CNP-wrapper">
-          <div className="CNP-container">
-            <form className="shadow rounded bg-body" onSubmit={submitHandler}>
+        <div className="row wrapper">
+          <div className="col-10 col-lg-10 mt-5 mt-lg-0">
+            <form className="shadow rounded bg-body p-5" onSubmit={submitHandler}>
               <h2 className="mb-4">Update Product</h2>
               <div className="mb-3">
                 <label htmlFor="name_field" className="form-label">
@@ -132,7 +132,7 @@ export default function UpdateProduct() {
                     Category
                   </label>
                   <select
-                    className="CNP-form-select"
+                    className="form-select"
                     id="category_field"
                     name="category"
                     value={category}
@@ -158,8 +158,14 @@ export default function UpdateProduct() {
                     onChange={onChange}
                   />
                 </div>
+                
               </div>
-              <button type="submit" className="CNP-btn" disabled={isLoading}>
+              <button
+                type="submit"
+                className="createNewProduct btn w-100 py-2
+"
+                disabled={isLoading}
+              >
                 {isLoading ? "Updating.." : "Update"}
               </button>
             </form>

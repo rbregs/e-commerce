@@ -24,8 +24,6 @@ export default function ProductDetails() {
     params?.id
   );
 
-
-
   const product = data?.product;
 
   // ----set default image
@@ -88,118 +86,104 @@ export default function ProductDetails() {
     toast.success("Item added to cart");
   };
 
-  console.log(product?.reviews)
+  console.log(product?.reviews);
   return (
     <>
       <MetaData title={"Product Info"} />
-      <div className="productDetails-container">
-        <div className="product-container">
-          <div className="productImages">
-            <div className="mainProduct">
-              <img src={activeImg} alt={product?.name} />
-            </div>
-
-            <div className="preview-container">
-              {product?.images?.map((img) => (
-                <div className="col" key={img.url}>
-                  <a role="button" onClick={() => setActiveImg(img.url)}>
-                    <img
-                      className={`custom-image ${
-                        img.url === activeImg ? "blueBorder" : ""
-                      }`}
-                      height="100"
-                      width="100"
-                      src={img?.url}
-                      alt={img?.url}
-                    />
-                  </a>
-                </div>
-              ))}
-            </div>
+      <div className="row d-flex justify-content-around">
+        <div className="col-12 col-lg-5 img-fluid" id="product_image">
+          <div className="p-3">
+            <img src={activeImg} alt={product?.name} />
           </div>
-          <div className="productDetails">
-            <h4>{product?.name}</h4>
-            <p>{product?._id}</p>
-            <hr />
-            <div className="reviews">
-              <StarRatings
-                rating={product?.ratings}
-                starRatedColor="orange"
-                numberOfStars={5}
-                name="rating"
-                starDimension="1.2rem"
-                starSpacing="0.25rem"
-              />
-              <div className="numberOfReviews">
-                {" "}
-                <span>({product?.numOfReviews})</span>{" "}
+          <div className="row justify-content-start mt-5">
+            {product?.images?.map((img) => (
+              <div className="col-2 ms-4 mt-2" key={img.url}>
+                <a role="button">
+                  <img
+                    className={`d-block  rounded p-3 cursor-pointer ${
+                      img.url === activeImg ? "blueBorder" : ""
+                    }`}
+                    height="100"
+                    width="100"
+                    src={img?.url}
+                    alt={img?.url}
+                    onClick={() => setActiveImg(img.url)} // Optional: Add click handler to change the image
+                  />
+                </a>
               </div>
-            </div>
-            <hr />
-            <h4>$ {product?.price}</h4>
-            <div className="quantitySection">
-              <span className="subtract" onClick={handleSubtractItem}>
-                {" "}
-                -{" "}
-              </span>
-              <input
-                type="number"
-                id="specific-input"
-                className="count"
-                value={quantity}
-                disabled
-              />
-              <span className="addition" onClick={handleAddItem}>
-                +
-              </span>
-              <button
-                className={product.stock === 0 ? "btnCartfaded" : "btnCart"}
-                disabled={product.stock === 0}
-                onClick={setItemToCart}
-              >
-                {" "}
-                Add to Cart
-              </button>
-            </div>
-            <hr />
-            <div className="stockStatus">
-              <p>Status: </p>
-              <span className={product?.stock > 0 ? "stock" : "outOfStock"}>
-                {product?.stock > 0
-                  ? `In Stock ( ${product?.stock} )`
-                  : "Out of Stock"}{" "}
-              </span>
-            </div>
-            <hr />
-            <div className="descriptionSection">
-              <h4>Description</h4>
-              <p className="productInfo">{product?.description}</p>
-            </div>
-            <hr />
-            <div>
-              <p>Sold by: {product.seller} </p>
-            </div>
-            {isAuthenticated ? (
-              <NewReview productId={product?._id} />
-            ) : (
-              <div className="reviewSection">
-                <div className="viewReview">
-                  <p>Login to post your review</p>
-                </div>
-              </div>
-            )}
+            ))}
           </div>
         </div>
+
+        <div className="col-12 col-lg-5 mt-5">
+          <h3>{product?.name}</h3> {/* Fixed missing closing tag */}
+          <p id="product_id">{product?._id}</p>
+          <hr />
+          <div className="d-flex">
+            <StarRatings
+              rating={product?.ratings}
+              starRatedColor="orange"
+              numberOfStars={5}
+              name="rating"
+              starDimension="1.2rem"
+              starSpacing="0.25rem"
+            />
+            <span id="no-of-reviews" className="pt-1 ps-2">
+              ({product?.numOfReviews})
+            </span>
+          </div>
+          <hr />
+          <p id="product_price">{product?.price}</p>
+          <div className="stockCounter d-inline">
+            <span className="btn btn-danger minus" onClick={handleSubtractItem}>
+              -
+            </span>
+            <input
+              type="number"
+              className="inputPDetails form-control count d-inline"
+              value={quantity}
+              disabled
+            />
+            <span className="btn btn-primary plus" onClick={handleAddItem}>
+              +
+            </span>
+          </div>
+          <button
+            className="btn btn-primary d-inline ms-4"
+            disabled={product.stock === 0}
+            onClick={setItemToCart}
+          >
+            Add to Cart
+          </button>
+          <hr />
+          <p>
+            Status:
+            <span className={product?.stock > 0 ? "stock" : "outOfStock"}>
+              {product?.stock > 0
+                ? `In Stock ( ${product?.stock} )`
+                : "Out of Stock"}
+            </span>
+          </p>
+          <hr />
+          <h4 className="mt-2">Description:</h4>
+          <p>{product?.description}</p>
+          <hr />
+          <p id="product_seller" className="mb-3">
+            Sold by: {product.seller}
+          </p>
+          {isAuthenticated ? (
+            <NewReview productId={product?._id} />
+          ) : (
+            <div className="alert alert-danger my-5" role="alert">
+              <p>Login to post your review</p>
+            </div>
+          )}
+        </div>
       </div>
-      
+
       {product?.reviews?.length > 0 && (
         <ListReviews reviews={product?.reviews} />
-        
-        
       )}
-
- 
-      
     </>
   );
 }

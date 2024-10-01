@@ -47,20 +47,20 @@ export default function Cart() {
     <>
       <MetaData title={"Your Cart"} />
       {cartItems?.length === 0 ? (
-        <h2 className="mt-5">Your Cart is Empty</h2>
+        <h2 className="mt-5 ms-5">Your Cart is Empty</h2>
       ) : (
         <>
-          <h2 className="mt-5">
+          <h2 className="mt-5 ms-5 p-2">
             Your Cart: <b  style={{ color: 'green' }}>{cartItems?.length}</b>
           </h2>
-          <div className="cartContainer">
-            <div className="cartProductContainer">
+          <div className="row d-flex justify-content-between p-2 me-5 ms-5">
+            <div className="col-12 col-lg-8">
               {cartItems.map((item) => (
                 <>
                   <hr />
                   <div className="cart-item" data-key="product1">
                     <div className="row">
-                      <div className="cartImage">
+                      <div className="col-4 col-lg-3">
                         <img
                           src={item?.image}
                           alt="Laptop"
@@ -74,11 +74,11 @@ export default function Cart() {
                       <div className="col-4 col-lg-2 mt-4 mt-lg-0">
                         <p id="card_item_price">{item?.price}</p>
                       </div>
-                      <div className="cartQuantity">
-                        <div className="stockCounter">
-                          <span className="btn btn-danger minus" onClick={() => handleSubtractItem(item,item.quantity)}>
+                      <div className="col-4 col-lg-3 mt-4 mt-lg-0">
+                        <div className="stockCounter d-inline">
+                          <span className="btn btn-danger minus " onClick={() => handleSubtractItem(item,item.quantity)}>
                              - </span>
-                          <input className="inputField"
+                          <input className="inputField ms-2 me-2 text-center "
                             // type="number"
                             value= {item?.quantity}
                             readOnly
@@ -89,7 +89,9 @@ export default function Cart() {
                       </div>
                       <div className="col-4 col-lg-1 mt-4 mt-lg-0">
                       
-                        <button className="cartDelete" onClick={()=> deleteItem(item?.product)}><i className="fas fa-trash"></i></button>
+                      <button className="DeleteCartItem" onClick={() => deleteItem(item?.product)}>
+                      <i class="fa-solid fa-trash"></i>
+                        </button>
                       </div>
                     </div>
                   </div>

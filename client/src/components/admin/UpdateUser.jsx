@@ -4,6 +4,7 @@ import AdminLayout from "../pageLayout/AdminLayout";
 import { useNavigate, useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import {
+  useDeleteUserMutation,
   useGetUserDetailsQuery,
   useUpdateUserMutation,
 } from "../../redux/api/userApi";
@@ -56,7 +57,7 @@ export default function UpdateUser() {
       <AdminLayout>
         <div className="row wrapper">
           <div className="col-10 col-lg-8">
-            <form className="shadow-lg" onSubmit={handleSubmit}>
+            <form className="shadow-lg p-5" onSubmit={handleSubmit}>
               <h2 className="mb-4">Update User</h2>
 
               <div className="mb-3">
@@ -103,8 +104,13 @@ export default function UpdateUser() {
                 </select>
               </div>
 
-              <button type="submit" className="btn update-btn w-100 py-2">
-                Update
+              <button
+                type="submit"
+                className="createNewProduct btn w-100 py-2
+"
+                disabled={isErrorLoading}
+              >
+                {isErrorLoading ? "Updating.." : "Update"}
               </button>
             </form>
           </div>
