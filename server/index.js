@@ -13,8 +13,8 @@ import orderRoutes from './routes/order.js'
 import payment from './routes/payment.js'
 import { fileURLToPath } from 'url';
 
-// const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename);
 
 
 //handle uncaught exception
@@ -25,8 +25,10 @@ process.on('uncaughtException', (err) => {
 })
 
 
+if (process.env.NODE_ENV !=="PRODUCTION") {
+    dotenv.config({ path: './config/config.env' })
+}
 
-dotenv.config({ path: './config/config.env' })
 
 
 const app = express()
@@ -54,16 +56,17 @@ app.use("/api/v1", auth)
 app.use("/api/v1", orderRoutes)
 app.use("/api/v1", payment)
 
-console.log('Current NODE_ENV outside the if statement:', process.env.NODE_ENV);
+// console.log('Current NODE_ENV outside the if statement:', process.env.NODE_ENV);
 if(process.env.NODE_ENV === "PRODUCTION") { 
 
-    app.use(express.static(path.join(__dirname, "../frontend/dist")))
-    console.log('Current NODE_ENV under if statement:', process.env.NODE_ENV);
-    console.log("working")
+    app.use(express.static(path.join(__dirname, "../client/dist")))
+    // console.log('Current NODE_ENV under if statement:', process.env.NODE_ENV);
+    // console.log("working")
     app.get('*',(req,res) =>{
-        res.sendFile(path.resolve(__dirname, "../frontend/dist/index.html"))
+        res.sendFile(path.resolve(__dirname, "../client/dist/index.html"));
     })
 }
+
 
 app.use(errorMiddleware)
 

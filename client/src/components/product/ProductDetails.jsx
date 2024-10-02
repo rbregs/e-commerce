@@ -9,6 +9,7 @@ import { setCartItems } from "../../redux/features/cartSlice";
 import MetaData from "../pageLayout/MetaData";
 import NewReview from "../reviews/NewReview";
 import ListReviews from "../reviews/ListReviews";
+import NotFound from "../notfound/NotFOund";
 
 export default function ProductDetails() {
   const params = useParams();
@@ -42,8 +43,14 @@ export default function ProductDetails() {
     }
   }, [isError]);
 
+  
+
   if (isLoading) return <Loader />;
 
+  if (error && error.status === 404) {
+    return <NotFound />;
+  }
+  
   // const handleAddItem = () => {
   //   const count = document.querySelector(".count");
   //   if (count.valueAsNumber >= product?.stock) return;
@@ -93,7 +100,12 @@ export default function ProductDetails() {
       <div className="row d-flex justify-content-around">
         <div className="col-12 col-lg-5 img-fluid" id="product_image">
           <div className="p-3">
-            <img src={activeImg} alt={product?.name} />
+          <img 
+  src={activeImg} 
+  alt={product?.name} 
+  style={{ width: "18.75rem", height: "18.75rem", objectFit: "cover" }} 
+/>
+
           </div>
           <div className="row justify-content-start mt-5">
             {product?.images?.map((img) => (
@@ -150,7 +162,7 @@ export default function ProductDetails() {
           </div>
           <button
             className="btn btn-primary d-inline ms-4"
-            disabled={product.stock === 0}
+            disabled={product?.stock === 0}
             onClick={setItemToCart}
           >
             Add to Cart

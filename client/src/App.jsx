@@ -5,6 +5,7 @@ import Footer from "./components/pageLayout/Footer";
 import toast, { Toaster } from "react-hot-toast";
 import useUserRoutes from './components/routes/UserRoutes'
 import useAdminRoutes from './components/routes/AdminRoutes'
+import NotFOund from "./components/notfound/NotFOund";
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
             <Routes>
               {userRoutes}
               {adminRoutes}
+              <Route path="*" element ={<NotFOund/>} />
             </Routes>
           </div>
 

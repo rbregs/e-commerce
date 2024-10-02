@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "start": "nodemon/index.js",
-    "dev": "set NODE_ENV=DEVELOPMENT&& nodemon server/index.js",
-    "prod": "set NODE_ENV=PRODUCTION && nodemon server/index.js",
+    "dev": "cross-env NODE_ENV=DEVELOPMENT nodemon server/index.js",
+    "prod": "cross-env NODE_ENV=PRODUCTION nodemon server/index.js",
     "seeder": "node seeder/seeder.js"
   },
   "keywords": [],
