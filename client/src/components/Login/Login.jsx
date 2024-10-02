@@ -74,7 +74,7 @@ export default function Login() {
                 </div>
                 <div className="d-grid">
                   <button type="submit" className="btn btn-block" disabled={isLoading}>
-                    {isLoading ? <Loader /> : "Login"}
+                    {isLoading ? "fetching.." : "Login"}
                   </button>
                 </div>
                 <div className="d-grid text-center mt-2">
