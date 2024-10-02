@@ -23,15 +23,23 @@ export default function UpdatePassword() {
       toast.success("Password Updated");
       navigate("/me/profile");
     }
-  }, [error, isSuccess]);
+  }, [error, isSuccess, navigate]);
 
-  const handleSubmit = (e) => {
+  const submitHandler = (e) => {
     e.preventDefault();
+
+    // Check password length before proceeding
+    if (password.length < 6) {
+      toast.error("Password should be at least 6 characters.");
+      return;
+    }
 
     const userData = {
       oldPassword,
       password,
     };
+
+    // Call the update password mutation
     updatePassword(userData);
   };
 
@@ -42,7 +50,7 @@ export default function UpdatePassword() {
         <div className="updatePassword-wrapper">
           <div className="col-10 col-lg-8">
             <div className="updatePassword-title">
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={submitHandler}>
                 <h2>Update Password</h2>
                 <div className="">
                   <label htmlFor="old_password_field">Current Password</label>
@@ -68,7 +76,7 @@ export default function UpdatePassword() {
 
                 <button
                   type="submit"
-                   className="btn w-100 py-2 updateProfile-btn"
+                  className="btn w-100 py-2 updateProfile-btn"
                   disabled={isLoading}
                 >
                   {isLoading ? "Updating Password..." : "Update Password"}

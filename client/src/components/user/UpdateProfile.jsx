@@ -51,7 +51,7 @@ export default function UpdateProfile() {
               <form action="#" method="post" onSubmit={handleSubmit}>
                 <h2>Update Profile</h2>
                 <div className="">
-                  <label htmlFor="old_password_field">Old Password</label>
+                  <label htmlFor="old_password_field">Username</label>
                   <input
                     type="text"
                     id="name_field"
@@ -63,7 +63,7 @@ export default function UpdateProfile() {
                 </div>
 
                 <div className="mb-3">
-                  <label htmlFor="new_password_field">New Password</label>
+                  <label htmlFor="new_password_field">Email</label>
                   <input
                     type="email"
                     id="email_field"

@@ -27,15 +27,15 @@ export default function UserLayout({children}) {
     ]
     
   return (
-    <div className="userLayout border p-3">
-      <h3 className="border mx-auto text-center w-100">
+    <div className="userLayout   p-3">
+      <h3 className="  mx-auto text-center w-100">
         User Settings
       </h3>
       <div className='row mt-5'>
-        <div className='col-md-3 ms-5 mx-3 border'>
+        <div className='col-md-3 ms-5 mx-3  '>
             <SidebarMenu menuItems={menuItems} />
         </div>
-        <div className='col-md-6  ms-5 border'>
+        <div className='col-md-6  ms-5  '>
           {children}
         </div>
       </div>

@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import UserLayout from "../pageLayout/UserLayout";
 import { useNavigate } from "react-router-dom";
@@ -13,57 +14,42 @@ export default function UploadAvatar() {
     user?.avatar ? user?.avatar?.url : "../public/images/avatar.png"
   );
 
-  const [upload, { isLoading, error, isSuccess }] = useUploadAvatarMutation();
+  const [uploadAvatar, { isLoading, error, isSuccess }] = useUploadAvatarMutation();
   const navigate = useNavigate();
-
   useEffect(() => {
     if (error) {
-      toast.error(error?.data.message);
+      toast.error(error?.data?.message);
     }
 
     if (isSuccess) {
       toast.success("Avatar Uploaded");
       navigate("/me/profile");
     }
-  }, [error, isSuccess, navigate]);
+  }, [error, isSuccess]);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    if (!avatar) {
-      toast.error("Please select an avatar.");
-      return;
-    }
 
-    try {
-      const response = await upload({ avatar });
-      console.log("Upload Response:", response);
-      if (response?.data) {
-        toast.success("Avatar Uploaded");
-        navigate("/me/profile");
-      } else {
-        toast.error("Upload failed.");
-      }
-    } catch (err) {
-      toast.error("An error occurred during upload.");
-      console.error("Upload Error:", err);
-    }
+    const userData = {
+      avatar,
+    };
+
+    uploadAvatar(userData);
   };
 
   const onChange = (e) => {
-    const file = e.target.files[0];
-    console.log("Selected file:", file); // Check selected file
-    if (file) {
-      const reader = new FileReader();
+    const reader = new FileReader();
 
-      reader.onload = () => {
-        setAvatarPreview(reader.result); // Update avatar preview
-        setAvatar(file); // Store file for upload
-      };
+    reader.onload = () => {
+      if (reader.readyState === 2) {
+        setAvatarPreview(reader.result);
+        setAvatar(reader.result);
+      }
+    };
 
-      reader.readAsDataURL(file); // Read the file as a data URL
-    }
+    reader.readAsDataURL(e.target.files[0]);
   };
-
+ 
   return (
     <>
       <MetaData title={"Update Avatar"} />

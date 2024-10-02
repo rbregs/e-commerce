@@ -75,8 +75,8 @@ export default function Header() {
             <NavLink
               to="/"
               className="nav-link ms-2"
-              activeClassName="active"
-              exact
+              activeclassname="active"
+              exact="true"
               style={({ isActive }) => {
                 return {
                   fontWeight: isActive ? "bold" : "",
@@ -89,7 +89,7 @@ export default function Header() {
             <NavLink
               to="/about"
               className="nav-link ms-2"
-              activeClassName="active"
+              activeclassname="active"
               style={({ isActive }) => {
                 return {
                   fontWeight: isActive ? "bold" : "",
@@ -102,7 +102,7 @@ export default function Header() {
             <NavLink
               to="/products"
               className="nav-link ms-2"
-              activeClassName="active"
+              activeclassname="active"
               style={({ isActive }) => {
                 return {
                   fontWeight: isActive ? "bold" : "",
@@ -115,7 +115,7 @@ export default function Header() {
             <NavLink
               to="/blogs"
               className="nav-link ms-2"
-              activeClassName="active"
+              activeclassname="active"
               style={({ isActive }) => {
                 return {
                   fontWeight: isActive ? "bold" : "",

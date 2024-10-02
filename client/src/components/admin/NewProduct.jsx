@@ -93,6 +93,8 @@ export default function NewProduct() {
                     id="price_field"
                     className="form-control"
                     name="price"
+                    value={price}
+                    onChange={onChange}
                   />
                 </div>
 
@@ -148,8 +150,8 @@ export default function NewProduct() {
               </div>
               <button
                 type="submit"
-                className="createNewProduct btn w-100 py-2
-"
+                className="createNewProduct btn w-100 py-2"
+                onClick={submitHandler}   
                 disabled={isLoading}
               >
                 {isLoading ? "Creating new product.." : "Create"}

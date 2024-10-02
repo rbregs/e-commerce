@@ -58,24 +58,26 @@ export const logout = catchAssyncErrors(async (req, res, next) => {
 });
 
 //upload avatar
+
 export const upload = catchAssyncErrors(async (req, res, next) => {
-
-    //remove previous avatar
-
+    const avatarResponse = await uploadFile(req.body.avatar,"kproducts/avatars")
+  
+    // Remove previous avatar
+    
     if(req?.user?.avatar.url) {
         await delteFile(req?.user?.avatar?.public_id)
     }
-    
-   const avatarResponse = await uploadFile(req.body.avatar,"kproducts/avatars")
+  
+    const user = await User.findByIdAndUpdate(req?.user?._id, {
+        avatar: avatarResponse
+       })
+       
+       res.status(200).json({
+        user,
+       })
+  });
 
-   const user = await User.findByIdAndUpdate(req?.user?._id, {
-    avatar: avatarResponse
-   })
-   
-    res.status(200).json({
-     user,
-    })
-});
+
 
 
 // forgotPassword function
@@ -153,24 +155,23 @@ export const getUserProfile = catchAssyncErrors(async (req,res,next) => {
 
 
 //update password api/v1/password/update
-export const updatePassword = catchAssyncErrors(async (req,res,next) => {
-    const user = await User.findById(req?.user?._id).select("+password")
-
-    //check the previous password
-
-    const isPasswordMatched = await user.comparePassword(req.body.oldPassword)
-
+export const updatePassword = catchAssyncErrors(async (req, res, next) => {
+    const user = await User.findById(req?.user?._id).select("+password");
+  
+    // Check the previous user password
+    const isPasswordMatched = await user.comparePassword(req.body.oldPassword);
+  
     if (!isPasswordMatched) {
-        return next(new ErrorHandler('Current password is incorrect', 400))
+      return next(new ErrorHandler("Current Password is incorrect", 400));
     }
-
-    user.password = req.body.password
-    user.save()
-
+  
+    user.password = req.body.password;
+    user.save();
+  
     res.status(200).json({
-        sucess: true,
-    })
-})
+      success: true,
+    });
+  });
 
 //update user profile  = > /api/v1/me/update
 export const updateProfile = catchAssyncErrors(async (req,res,next) => {

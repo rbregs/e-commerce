@@ -37,7 +37,7 @@ export const userApi = createApi({
     uploadAvatar: builder.mutation({
       query(body) {
         return {
-          url: "me/upload_avatar",
+          url: "/me/upload_avatar",
           method: "PUT",
           body,
         };
