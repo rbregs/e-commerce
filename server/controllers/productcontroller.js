@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import Product from '../models/product.js'
 import Order from '../models/orderModel.js'
 import ErrorHandler from '../utils/errorHandler.js';
-import APIFilters from '../utils/apiFIlter.js';
+import APIFilters from '../utils/apiFilter.js';
 import catchAssyncErrors from '../middlewares/catchAssyncErrors.js';
 import {uploadFile, delteFile} from "../utils/cloudinary.js"
 
