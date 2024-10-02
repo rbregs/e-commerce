@@ -4,7 +4,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon server/index.js",
+    "start": "node server/index.js",
     "dev": "cross-env NODE_ENV=DEVELOPMENT nodemon server/index.js",
     "prod": "cross-env NODE_ENV=PRODUCTION nodemon server/index.js",
     "seeder": "node seeder/seeder.js"
