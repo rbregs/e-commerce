@@ -92,7 +92,7 @@ export default function Register() {
                 </div>
                 <div className="d-grid">
                   <button type="submit" className="btn btn-block" disabled={isLoading}>
-                    {isLoading ? <Loader /> : "Register"}
+                    {isLoading ? "Loading.." : "Register"}
                   </button>
                 </div>
                 <div className="d-grid text-center mt-2">
