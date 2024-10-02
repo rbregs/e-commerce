@@ -4,7 +4,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon/index.js",
+    "start": "nodemon server/index.js",
     "dev": "cross-env NODE_ENV=DEVELOPMENT nodemon server/index.js",
     "prod": "cross-env NODE_ENV=PRODUCTION nodemon server/index.js",
     "seeder": "node seeder/seeder.js"
@@ -27,5 +27,8 @@
   "devDependencies": {
     "cross-env": "^7.0.3",
     "nodemon": "^3.1.4"
+  },
+  "engines": {
+    "node": ">=14.x"
   }
 }
