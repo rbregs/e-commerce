@@ -106,7 +106,7 @@ export default function NewProduct() {
                     id="stock_field"
                     className="form-control"
                     name="stock"
-                    value={price}
+                    value={stock}
                     onChange={onChange}
                   />
                 </div>
